@@ -1,17 +1,17 @@
-var password1 = document.registration.password1;
-  var confirm_password = document.registration.confirm_password;
-  var uname = document.registration.username;
-  var uemail = document.registration.email;
+var password = document.registration.password;
+var repeat_password = document.registration.repeat_password;
+var username = document.registration.username;
+var email = document.registration.email;
   
  
 
 function formValidation() {
   
 
-  if (ValidateEmail(uemail)) {
-    if (allLetter(uname)) {
-      if (password_validation(password1, 7, 12)) {
-        if (matchPassword(password1, confirm_password)) {
+  if (ValidateEmail(email)) {
+    if (allLetter(username)) {
+      if (password_validation(password, 7, 12)) {
+        if (matchPassword(password, repeat_password)) {
           
         }
       }
@@ -20,37 +20,37 @@ function formValidation() {
   return false;
 
   /////////////////////////////////////////
-  function password_validation(password1, minimum, maximum) {
-    var password_length = password1.value.length;
+  function password_validation(password, minimum, maximum) {
+    var password_length = password.value.length;
     if (password_length == 0 || password_length >= maximum || password_length < minimum) {
       swal("Password should not be empty / length be between " + minimum + " to " + maximum);
-      password1.focus();
+      password.focus();
       return false;
     }
     return true;
   }
 
   /////////////////////////////////////////
-  function allLetter(uname) {
+  function allLetter(username) {
     var letters = /^[A-Za-z]+$/;
-    if (uname.value.match(letters)) {
+    if (username.value.match(letters)) {
       return true;
     }
     else {
       swal('Username must have alphabet characters only');
-      uname.focus();
+      username.focus();
       return false;
     }
   }
   /////////////////////////////////////////
-  function ValidateEmail(uemail) {
+  function ValidateEmail(email) {
     var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    if (uemail.value.match(mailformat)) {
+    if (email.value.match(mailformat)) {
       return true;
     }
     else {
       
-        swal("Enter valid email id", "error"); 
+        swal("Enter valid email id","error"); 
       
       
        
@@ -59,7 +59,7 @@ function formValidation() {
     /////////////////////////////////////////
     
     function matchPassword() {
-      if (password1.value != confirm_password.value) {
+      if (password.value != repeat_password.value) {
         swal("Passwords did not match");
       }
   

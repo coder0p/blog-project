@@ -30,13 +30,13 @@
               <form method="POST" name='registration' action="/" name="form" >                
                 <!-- Email input -->
                 <div class="form-outline mb-4">
-                  {% with messages = get_flashed_messages() %}  
+                  <!-- {% with messages = get_flashed_messages() %}  
                   {% if messages %}  
                   {% for message in messages %}  
                        <p>{{ message }}</p>  
                   {% endfor %}  
                   {% endif %}  
-                  {% endwith %}
+                  {% endwith %} -->
                   <input type="text" id="email" class="form-control form-control-lg" name="email"
                     placeholder="Enter a email address" />
                   <label class="form-label" for="email">Email address</label>
@@ -49,12 +49,12 @@
       
                 <!-- Password input -->
                 <div class="form-outline mb-3">
-                  <input type="password" id="form3Example4" class="form-control form-control-lg" name="password"
+                  <input type="password" id="password" class="form-control form-control-lg" name="password"
                     placeholder="Enter password" />
-                  <label class="form-label" for="form3Example4">Password</label>
-                  <input type="password" id="form3Example4" class="form-control form-control-lg" name="repeat_password"
+                  <label class="form-label" for="password">Password</label>
+                  <input type="password" id="repeat_password" class="form-control form-control-lg" name="repeat_password"
                     placeholder="Repeat password" />
-                  <label class="form-label" for="form3Example4">Re-type password</label>
+                  <label class="form-label" for="repeat_password">Re-type password</label>
                 </div>
                  <div class="text-center text-lg-start mt-4 pt-2">
                   <button type="submit" class="btn btn-primary btn-lg"
@@ -67,4 +67,6 @@
         </div>
       </section>
 </body>
+<script src="{{url_for('static', filename='index.js')}}"></script>
+<script src="https://unpkg.com/sweetalert2@7.8.2/dist/sweetalert2.all.js"></script>
 </html>
