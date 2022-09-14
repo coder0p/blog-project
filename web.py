@@ -10,9 +10,6 @@ app.config['SECRET_KEY'] = "helloworld"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///blog'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
-
-
-    
     
 class User(db.Model,UserMixin):
     """User account model."""
@@ -32,14 +29,10 @@ def sign_up():
         password = request.form.get("password")
 
         email_exists = User.query.filter_by(email=email).first()
-        username_exists = User.query.filter_by(username=username).first()
 
         if email_exists:
             flash('Email is already in use.', category='error')
-        elif username_exists:
-            flash('Username is already in use.', category='error')
-            
-
+                
         else:
             
             new_user = User(email=email, username=username, password=generate_password_hash(
