@@ -60,9 +60,3 @@ function formValidation() {
 }
 // ----------------------------------------------------------------
 
-//login form validtion
-
-function loginValidation(){
-
-   var password = document.login.
-}
