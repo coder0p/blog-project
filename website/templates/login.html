@@ -27,30 +27,31 @@ rel="stylesheet"
         <h1 class="text-center pt-2">LOGIN</h1>
         <div class="col-md-9 col-lg-6 col-xl-5">
           <img src="https://img.freepik.com/free-vector/mobile-login-concept-illustration_114360-135.jpg?w=2000"
-            class="img-fluid" alt="Sample image">
+            class="img-fluid" alt="login image">
         </div>
         <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
 
         <form method="POST" name="login">
-          <!-- Email input -->
           {% with messages = get_flashed_messages(with_categories=True) %}
           {% if messages %}
-            {% for category, message in messages %}
-            {% if category == "error" %}
-            <div class="alert alert-danger alter-dismissible fade show" role="alert">
-              {{ message }}
-              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-            {% else %}
-            <div class="alert alert-success alter-dismissible fade show" role="alert">
-              {{ message }}
-              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-            {% endif %}
-    
-            {% endfor %}
+          {% for category, message in messages %}
+          {% if category == "error" %}
+          <div class="alert alert-danger alter-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          </div>
+          {% else %}
+          <div class="alert alert-success alter-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
           {% endif %}
-        {% endwith %}
+          
+          {% endfor %}
+          {% endif %}
+          {% endwith %}
+
+          <!-- Email input -->
             <div class="form-outline mb-4">
               <input type="text" id="email" class="form-control form-control-lg" 
               name="email" />
