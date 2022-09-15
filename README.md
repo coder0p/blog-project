@@ -1,1 +1,1 @@
-# blog-project
+# Blog project
