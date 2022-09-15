@@ -63,7 +63,7 @@ def sign_up():
             db.session.commit()
             login_user(new_user, remember=True)
             flash('User created!')
-            return redirect(url_for('views.home'))
+            return redirect(url_for('auth.login'))
 
     return render_template("registration.html")
 
@@ -72,4 +72,5 @@ def sign_up():
 @login_required
 def logout():
     logout_user()
+    flash('logout successfully',category='error')
     return redirect(url_for("views.home"))
