@@ -1,27 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- css file -->
-    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
-    <!-- bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
-    <!-- mdbootstrap -->
-    <link
-    href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.css"
-    rel="stylesheet"
-    />
-    <!-- google fonts -->
-    <link
-href="https://fonts.googleapis.com/css?family=Kanit:300,400,500,700&display=swap"
-rel="stylesheet"
-/>
-    <title>Registration</title>
-</head>
-<body>
+{% extends "base.html" %} {% block title %}Registration{% endblock %} 
+
+{% block content%}
+
     <section class="vh-100">
         <div class="container-fluid h-custom">
           <div class="row d-flex justify-content-center align-items-center h-100">
@@ -34,25 +14,6 @@ rel="stylesheet"
     
               <form method="POST" name='registration' >                
                 
-                {% with messages = get_flashed_messages(with_categories=True) %}
-                {% if messages %}
-                {% for category, message in messages %}
-                {% if category == "error" %}
-                <div class="alert alert-danger alter-dismissible fade show" role="alert">
-                  {{ message }}
-                  <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                </div>
-                {% else %}
-                <div class="alert alert-success alter-dismissible fade show" role="alert">
-                  {{ message }}
-                  <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                </div>
-                {% endif %}
-                
-                {% endfor %}
-                {% endif %}
-                {% endwith %}
-
                 <!-- Email input -->
                 <div class="form-outline mb-4">
                   <input type="text" id="email" class="form-control form-control-lg" name="email"/>
@@ -74,25 +35,17 @@ rel="stylesheet"
                   <input type="password" id="form3Example4" class="form-control form-control-lg" name="repeat_password"/>
                   <label class="form-label" for="form3Example4">Confirm password</label>
                 </div>
-
-                 <div class="text-center text-lg-start mt-4 pt-2">
+                <div class="text-center text-lg-start mt-4 pt-2">
                   <button type="submit" class="btn btn-primary btn-lg"
                     style="padding-left: 2.5rem; padding-right: 2.5rem;" onclick="formValidation()">Register</button>
                 </div>
-      
+   
               </form>
+              
+
+              
             </div>
           </div>
         </div>
       </section>
-
-      <script
-      type="text/javascript"
-      src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.js"
-    ></script>
-    <script src="{{ url_for('static', filename='index.js') }}"></script>
-</body>
-<script src="{{url_for('static', filename='index.js')}}"></script>
-<!-- <script src="https://unpkg.com/sweetalert2@7.8.2/dist/sweetalert2.all.js"></script> -->
-
-</html>
+      {% endblock %}
