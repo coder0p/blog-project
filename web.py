@@ -42,8 +42,9 @@ def sign_up():
 
         else:
             
-            new_user = User(email=email, username=username, password=generate_password_hash(
-                password, method='sha256'))
+            new_user = User(email=email, username=username, 
+                            password=generate_password_hash(
+                                password, method='sha256'))
             db.session.add(new_user)
             db.session.commit()
             flash('User created!')
@@ -53,4 +54,5 @@ def sign_up():
 
 if __name__ == "__main__":
     db.create_all()
+    print('Creating database is success...')
     app.run(debug=True)

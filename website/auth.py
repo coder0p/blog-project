@@ -16,7 +16,7 @@ def login():
         user = User.query.filter_by(email=email).first()
         if user:
             if check_password_hash(user.password, password):
-                flash("Logged in!", category='success')
+                flash("Logged in successfully !", category='success')
                 login_user(user, remember=True)
                 return redirect(url_for('views.home'))
             else:
@@ -27,7 +27,7 @@ def login():
     return render_template("login.html")
 
 
-@auth.route("/signup", methods=['GET', 'POST'])
+@auth.route("/sign-up", methods=['GET', 'POST'])
 def sign_up():
     if request.method == 'POST':
         email = request.form.get("email")
@@ -44,13 +44,18 @@ def sign_up():
         elif username_exists:
             flash('Username is already in use.', category='error')
         elif password1 != password2:
+          #  print('hsfvhdf')
             flash('Password don\'t match!', category='error')
-        elif len(username) < 4:
-            flash('Username is too short.', category='error')
-        elif len(password1) < 6:
-            flash('Password is too short.', category='error')
-        elif len(email) < 6:
+        elif len(email) <= 10:
+           # print('fvdhjvfdj')
             flash("Email is invalid.", category='error')
+        elif len(username) < 4:
+          #  print('dcsfgv')
+            flash('Username is too short.', category='error')
+        elif len(password1) <= 6:
+           # print('sdcshdf')
+            flash('Password is too short.', category='error')
+
 
         else:
             new_user = User(email=email, username=username, password=generate_password_hash(
@@ -58,7 +63,7 @@ def sign_up():
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user, remember=True)
-            flash('User created! Please login to continue')
+            flash('User created!')
             return redirect(url_for('auth.login'))
 
     return render_template("registration.html")

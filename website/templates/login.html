@@ -1,64 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %} {% block title %}LOGIN{% endblock %} 
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}"> -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
-  <title>Login</title>
-</head>
-
-<body>
+{% block content%}
 
   <section class="vh-100">
     <div class="container-fluid h-custom">
       <div class="row d-flex justify-content-center align-items-center h-100">
-        <h1 class="text-center">Login</h1>
+        <h1 class="text-center pt-2">LOGIN</h1>
         <div class="col-md-9 col-lg-6 col-xl-5">
           <img src="https://img.freepik.com/free-vector/mobile-login-concept-illustration_114360-135.jpg?w=2000"
             class="img-fluid" alt="Sample image">
         </div>
         <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
 
-        <form method="POST">
-          <!-- Email input -->
-          {% with messages = get_flashed_messages(with_categories=True) %}
-          {% if messages %}
-            {% for category, message in messages %}
-            {% if category == "error" %}
-            <div class="alert alert-danger alter-dismissible fade show" role="alert">
-              {{ message }}
-              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-            {% else %}
-            <div class="alert alert-success alter-dismissible fade show" role="alert">
-              {{ message }}
-              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-            {% endif %}
-    
-            {% endfor %}
-          {% endif %}
-        {% endwith %}
+        <form method="POST" name="login">
             <div class="form-outline mb-4">
               <input type="text" id="email" class="form-control form-control-lg" 
-              name="email" placeholder="Enter a email address" />
-              <label class="form-label" for="email">Email address</label>
+              name="email" />
+              <label class="form-label" for="email">Enter a email address</label>
             </div>
 
             <!-- Password input -->
             <div class="form-outline mb-3">
               <input type="password" id="form3Example4" class="form-control form-control-lg"
-                placeholder="Enter password" name="password" />
-              <label class="form-label" for="form3Example4">Password</label>
+                 name="password" />
+              <label class="form-label" for="form3Example4">Enter your password</label>
             </div>
             <div class="text-center text-lg-start mt-4 pt-2">
               <button type="submit" class="btn btn-primary btn-lg"
                 style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
-              <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="/templates/registration.html"
+              <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="{{ url_for('auth.sign_up') }}"
                   class="link-danger">Register</a></p>
             </div>
 
@@ -67,6 +37,4 @@
       </div>
     </div>
   </section>
-</body>
-
-</html>
+  {% endblock %}
