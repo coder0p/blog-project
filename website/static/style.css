@@ -17,6 +17,10 @@ height: 100%;
 }
 
 
+/* ------------------------------------------- */
+
+/* base.html alert message   */
+
 #top-alert {
     text-align: center;
     font-size: large;
@@ -27,4 +31,3 @@ height: 100%;
     top: 0;
     z-index: 99999;
   }
-/* ------------------------------------------- */
