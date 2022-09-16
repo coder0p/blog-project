@@ -27,7 +27,7 @@ def login():
     return render_template("login.html")
 
 
-@auth.route("/sign-up", methods=['GET', 'POST'])
+@auth.route("/signup", methods=['GET', 'POST'])
 def sign_up():
     if request.method == 'POST':
         email = request.form.get("email")
@@ -44,16 +44,12 @@ def sign_up():
         elif username_exists:
             flash('Username is already in use.', category='error')
         elif password1 != password2:
-          #  print('hsfvhdf')
             flash('Password don\'t match!', category='error')
         elif len(email) <= 10:
-           # print('fvdhjvfdj')
             flash("Email is invalid.", category='error')
         elif len(username) < 4:
-          #  print('dcsfgv')
             flash('Username is too short.', category='error')
         elif len(password1) <= 6:
-           # print('sdcshdf')
             flash('Password is too short.', category='error')
 
 
@@ -63,7 +59,7 @@ def sign_up():
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user, remember=True)
-            flash('User created!')
+            flash('User created! Please login to continue')
             return redirect(url_for('auth.login'))
 
     return render_template("registration.html")
