@@ -32,10 +32,9 @@ function formValidation() {
     }
     return true;
   }
-
-  
+ 
   function allLetter(username) {
-    var letters = /^[A-Za-z]+$/;
+  var letters =   /^[A-Za-z]+/ ;
     if (username.value.match(letters)) {
       return true;
     }
