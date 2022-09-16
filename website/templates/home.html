@@ -27,7 +27,7 @@
       <ul class="navbar-nav ms-auto align-items-center">
         {% if current_user.is_authenticated %}
         <li class="nav-item">
-          <a class="nav-link mx-2" href="#!"><i class="fas fa-plus-circle pe-2 text-success"></i>Post</a>
+          <a class="nav-link mx-2" href="{{ url_for('views.post') }}"><i class="fas fa-plus-circle pe-2 text-success"></i>Post</a>
         </li>
         
         <li class="nav-item me-3 me-lg-0 dropdown">
@@ -51,7 +51,7 @@
             </li>
         {% else %}
         <li class="nav-item">
-          <a class="nav-link mx-2" href="#!"><i class="fas fa-plus-circle pe-2"></i>Post</a>
+          <a class="nav-link mx-2" href="{{ url_for('auth.login') }}"><i class="fas fa-plus-circle pe-2"></i>Post</a>
         </li>
         <li class="nav-item ms-3">
           <a class="btn btn-black btn-rounded" href="{{ url_for('auth.login') }}">Sign in</a>
