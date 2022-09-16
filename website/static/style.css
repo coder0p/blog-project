@@ -16,15 +16,4 @@ height: 100%;
 }
 }
 
-
-#top-alert {
-    text-align: center;
-    font-size: large;
-    margin-bottom: 0;
-    border-radius: 0;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 99999;
-  }
 /* ------------------------------------------- */

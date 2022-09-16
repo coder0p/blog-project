@@ -16,7 +16,7 @@ def login():
         user = User.query.filter_by(email=email).first()
         if user:
             if check_password_hash(user.password, password):
-                flash("Logged in Success !", category='success')
+                flash("Logged in!", category='success')
                 login_user(user, remember=True)
                 return redirect(url_for('views.home'))
             else:
@@ -46,16 +46,15 @@ def sign_up():
         elif password1 != password2:
           #  print('hsfvhdf')
             flash('Password don\'t match!', category='error')
-        elif len(email) <= 10:
-           # print('fvdhjvfdj')
-            flash("Email is invalid.", category='error')
-        elif len(username) <= 4:
+        elif len(username) < 4:
           #  print('dcsfgv')
             flash('Username is too short.', category='error')
-        elif len(password1) <= 6:
+        elif len(password1) < 6:
            # print('sdcshdf')
             flash('Password is too short.', category='error')
-
+        elif len(email) < 6:
+           # print('fvdhjvfdj')
+            flash("Email is invalid.", category='error')
 
         else:
             new_user = User(email=email, username=username, password=generate_password_hash(

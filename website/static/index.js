@@ -16,9 +16,7 @@ function formValidation() {
         }
       }
     }
-
   }
-
   return false;
 
 
