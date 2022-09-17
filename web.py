@@ -22,6 +22,18 @@ class User(db.Model,UserMixin):
     username = db.Column(db.String(150), unique=True)
     password = db.Column(db.String(150))
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
+    posts = db.relationship('Post', backref='user')
+
+
+class Post(db.Model):
+    __tablename__ = "post"
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(150))
+    category = db.Column(db.String(150))
+    content = db.Column(db.Text, nullable=False)
+    date_created = db.Column(db.DateTime(timezone=True), default=func.now())
+    user_id = db.Column(db.Integer, db.ForeignKey(
+        'users.id'), nullable=False)
     
     
 @app.route("/", methods=['GET', 'POST'])
@@ -55,4 +67,4 @@ def sign_up():
 if __name__ == "__main__":
     db.create_all()
     print('Creating database is success...')
-    app.run(debug=True)
+   # app.run(debug=True)

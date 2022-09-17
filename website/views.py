@@ -1,5 +1,7 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
+from .models import Post, User
+from . import db
 
 views = Blueprint("views", __name__)
 
@@ -8,10 +10,31 @@ views = Blueprint("views", __name__)
 @views.route("/home")
 #@login_required
 def home():
-    return render_template("home.html",current_user=current_user)
+    posts = Post.query.all()
+    return render_template("home.html",current_user=current_user, posts=posts)
 
 
-@views.route("/post")
+
+@views.route("/post", methods=['GET', 'POST'])
 @login_required
-def post():
-    return render_template("posts.html",current_user=current_user)
+def create_post():
+    if request.method == "POST":
+        Category_ = request.form.get('Category')
+        title = request.form.get('title')
+        content = request.form.get('content')
+       # new_post = Post(title =title, Category=Category, content=content)
+
+        if not Category_ :
+            flash('Input items cannot be empty', category='error')
+        elif not title:
+            flash('Input items cannot be empty', category='error')
+        elif not content:
+            flash('Input items cannot be empty', category='error')
+        else:
+            post = Post(title =title, category=Category_, content=content, user_id=current_user.id)
+            db.session.add(post)
+            db.session.commit()
+            flash('Post created!', category='success')
+            return redirect(url_for('views.home'))
+
+    return render_template('posts.html')

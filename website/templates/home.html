@@ -27,7 +27,7 @@
       <ul class="navbar-nav ms-auto align-items-center">
         {% if current_user.is_authenticated %}
         <li class="nav-item">
-          <a class="nav-link mx-2" href="{{ url_for('views.post') }}"><i class="fas fa-plus-circle pe-2 text-success"></i>Post</a>
+          <a class="nav-link mx-2" href="{{ url_for('views.create_post') }}"><i class="fas fa-plus-circle pe-2 text-success"></i>Post</a>
         </li>
         
         <li class="nav-item me-3 me-lg-0 dropdown">
@@ -64,5 +64,20 @@
   </div>
 </nav>
 
+<div>
+<h1>
+{%for post in posts%}
+{{post.content}}
+<h2> 
+{{post.title}}<br>
+{{post.category}}
 
+</h2>
+{{post.user.username}}<br>
+{{post.user.email}}<br>
+{{post.user.password}}
+
+{% endfor %}
+</h1>
+</div>
 {% endblock %}
