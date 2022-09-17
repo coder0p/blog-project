@@ -31,3 +31,10 @@ height: 100%;
     top: 0;
     z-index: 99999;
   }
+
+
+  /* password secondary label*/
+  
+  .passlabel{
+    color: #2841ca;
+  }
