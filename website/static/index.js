@@ -25,7 +25,7 @@ function formValidation() {
 
   function password_validation(password, minimum, maximum) {
     var password_length = password.value.length;
-    if (password_length == 0 || password_length >= maximum || password_length < minimum) {
+    if (password_length == 0 || password_length > maximum || password_length < minimum) {
       alert("Password should not be empty / length be between " + minimum + " to " + maximum);
       password.focus();
       return false;
@@ -60,3 +60,12 @@ function formValidation() {
   
 }
 // ----------------------------------------------------------------
+
+// registration password condditioned label 
+
+function labelVisible(){
+  document.getElementById("passwordLable").style.display = "inline"
+}
+function labelInvisible(){
+  document.getElementById("passwordLable").style.display = "none"
+}
