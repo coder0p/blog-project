@@ -50,3 +50,27 @@
 .dropdown:hover .dropdown-content {
     display: block;
   }
+
+
+
+/* flask flash meessage fade out */
+  .message-fade{
+    animation:message-fade 0.5s 1;
+   -webkit-animation:message-fade 0.5s 1;
+   animation-fill-mode: forwards;
+
+   animation-delay:3s;
+   -webkit-animation-delay:2s; 
+   -webkit-animation-fill-mode: forwards;
+
+} 
+
+@keyframes message-fade{
+   from {opacity :1;}
+   to {opacity :0;}
+}
+
+@-webkit-keyframes message-fade{
+   from {opacity :1;}
+   to {opacity :0;}
+}
