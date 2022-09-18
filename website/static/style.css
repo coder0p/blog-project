@@ -24,17 +24,46 @@ height: 100%;
 #top-alert {
     text-align: center;
     font-size: large;
-    margin-bottom: 0;
-    border-radius: 0;
+    border-radius: 10px;
     position: fixed;
-    width: 100%;
     top: 0;
     z-index: 99999;
   }
+
+
+
 
 
   /* password secondary label*/
   
   .passlabel{
     color: #2841ca;
+  }
+
+
+
+
+   /* content shrink into nav bar */
+
+   body{
+    padding-top: 70px;
+    
+  }
+
+
+
+
+/* User dropdown on hover display */
+.dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+  }
+
+.dropdown:hover .dropdown-content {
+    display: block;
   }

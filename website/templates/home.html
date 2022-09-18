@@ -1,54 +1,46 @@
-{% extends "base.html" %}{% block title %}Home{% endblock %}
+{% extends "base.html" %}{% block title %}homepage{% endblock %}
 
 {% block content%}
+
+
+<!-- Navbar -->
+
 <nav class="navbar navbar-expand-lg fixed-top bg-light navbar-light">
   <div class="container">
-    <a class="navbar-brand" href="{{ url_for('views.home') }}"
-      ><img
-        id="blog-logo"
-        src="https://www.freeiconspng.com/thumbs/blogger-logo-icon-png/blogger-logo-icon-png-28.png"
-        alt="MDB Logo"
-        draggable="false"
-        height="30"
-    /></a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-mdb-toggle="collapse"
-      data-mdb-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
+    <a class="navbar-brand" href="{{ url_for('views.home') }}"><img id="blog-logo"
+        src="https://www.freeiconspng.com/thumbs/blogger-logo-icon-png/blogger-logo-icon-png-28.png" alt="MDB Logo"
+        draggable="false" height="30" /></a>
+    <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <i class="fas fa-bars"></i>
     </button>
 
+    <!-- Post icon -->
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ms-auto align-items-center">
+
+        <!-- Checking if user is logged in or not -->
         {% if current_user.is_authenticated %}
         <li class="nav-item">
-          <a class="nav-link mx-2" href="{{ url_for('views.create_post') }}"><i class="fas fa-plus-circle pe-2 text-success"></i>Post</a>
+          <a class="nav-link mx-2" href="{{ url_for('views.create_post') }}"><i
+              class="fas fa-plus-circle pe-2 text-success"></i>Post</a>
         </li>
-        
+
+        <!-- User icon and dropdown -->
         <li class="nav-item me-3 me-lg-0 dropdown">
-          <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            id="navbarDropdown"
-            role="button"
-            data-mdb-toggle="dropdown"
-            aria-expanded="false"
-          >
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-mdb-toggle="dropdown"
+            aria-expanded="false">
             <i class="fas fa-user"></i>
           </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li>
-              <p class="dropdown-item"> Hi {{ current_user.username }} !</p>
+          <ul class="dropdown-menu dropdown" aria-labelledby="navbarDropdown">
+            <li class="dropdown-content">
+              <p class="dropdown-item"> Hi.. {{ current_user.username }} !</p>
             </li>
           </ul>
-            <li class="nav-item ms-3">
-              <a class="btn btn-black btn-rounded" href="{{ url_for('auth.logout') }}">Logout</a>
-            </li>
+        <li class="nav-item ms-3">
+          <a class="btn btn-black btn-rounded" href="{{ url_for('auth.logout') }}">Logout</a>
+        </li>
+
         {% else %}
         <li class="nav-item">
           <a class="nav-link mx-2" href="{{ url_for('auth.login') }}"><i class="fas fa-plus-circle pe-2"></i>Post</a>
@@ -57,27 +49,32 @@
           <a class="btn btn-black btn-rounded" href="{{ url_for('auth.login') }}">Sign in</a>
         </li>
 
-      {% endif %}
+        {% endif %}
 
       </ul>
     </div>
   </div>
 </nav>
 
-<div>
-<h1>
-{%for post in posts%}
-{{post.content}}
-<h2> 
-{{post.title}}<br>
-{{post.category}}
 
-</h2>
-{{post.user.username}}<br>
-{{post.user.email}}<br>
-{{post.user.password}}
-
-{% endfor %}
+<!-- Displaying created post in home page -->
+{% if posts %}
+<h1 class="text-center pt-2">
+  <mark class="rounded-pill shadow-4">Latest posts</mark>
 </h1>
+{%for post in posts%}
+<div class="container mt-4 shadow-4">
+  <div>
+    <i class="fas fa-user-circle"></i>
+    <span class="small">posted by {{post.user.username}}</span>
+  </div>
+  <h2>{{post.title}}</h2>
+  <span class="badge bg-secondary">{{post.category}}</span>
+  <p>
+    {{post.content}}
+  </p>
 </div>
+{% endfor %}
+{% endif %}
+
 {% endblock %}

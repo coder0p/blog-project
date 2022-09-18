@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
-from .models import Post, User
+from .models import Post
 from . import db
 
 views = Blueprint("views", __name__)
@@ -10,7 +10,7 @@ views = Blueprint("views", __name__)
 @views.route("/home")
 #@login_required
 def home():
-    posts = Post.query.all()
+    posts = Post.query.order_by(Post.date_created.desc()).all()
     return render_template("home.html",current_user=current_user, posts=posts)
 
 
