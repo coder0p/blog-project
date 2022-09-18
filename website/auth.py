@@ -24,7 +24,7 @@ def login():
         else:
             flash('Email does not exist.', category='error')
 
-    return render_template("login.html"),401
+    return render_template("login.html")
 
 
 @auth.route("/signup", methods=['GET', 'POST'])
@@ -45,9 +45,7 @@ def sign_up():
             flash('Username is already in use.', category='error')
         elif password1 != password2:
             flash('Password don\'t match!', category='error')
-        elif len(email) <= 10:
-            flash("Email is invalid.", category='error')
-        elif len(username) < 4:
+        elif len(username) < 2:
             flash('Username is too short.', category='error')
         elif len(password1) <= 6:
             flash('Password is too short.', category='error')
@@ -62,7 +60,7 @@ def sign_up():
             flash('User created! Please login to continue')
             return redirect(url_for('auth.login'))
 
-    return render_template("registration.html"),401
+    return render_template("registration.html")
 
 
 @auth.route("/logout")
