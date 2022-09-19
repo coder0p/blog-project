@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
+from website.filters import fromnow
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "helloworld"
@@ -17,7 +18,7 @@ def create_app():
     
     app.register_blueprint(views, url_prefix="/")
     app.register_blueprint(auth, url_prefix="/")
-
+    app.jinja_env.filters['timesago'] = fromnow
 
     login_manager = LoginManager()
     login_manager.init_app(app)

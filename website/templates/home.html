@@ -72,6 +72,8 @@
   <span class="badge bg-secondary">{{post.category}}</span>
   <p>
     {{post.content}}
+    {{post.date_created|timesago}}
+
   </p>
 </div>
 {% endfor %}
