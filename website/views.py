@@ -21,7 +21,7 @@ def create_post():
         Category_ = request.form.get('Category')
         title = request.form.get('title')
         content = request.form.get('content')
-       # new_post = Post(title =title, Category=Category, content=content)
+       
 
         if not Category_ :
             flash('Input items cannot be empty', category='error')
