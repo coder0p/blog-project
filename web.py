@@ -21,19 +21,32 @@ class User(db.Model,UserMixin):
     email = db.Column(db.String(150), unique=True)
     username = db.Column(db.String(150), unique=True)
     password = db.Column(db.String(150))
-    posts = db.relationship('Post', backref='user')
+    posts = db.relationship('Post', back_populates ='user')
 
 
 class Post(db.Model):
+    """Users posts model."""
     __tablename__ = "post"
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(150))
     category = db.Column(db.String(150))
     content = db.Column(db.Text, nullable=False)
-    date_created = db.Column(db.DateTime(), default=func.now())
-    user_id = db.Column(db.Integer, db.ForeignKey(
-        'users.id'), nullable=False)
+    date_created = db.Column(db.DateTime, default=func.now())
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    user = db.relationship('User', back_populates ='posts')
+    comments = db.relationship('Comment', back_populates ='post')
+
     
+class Comment(db.Model):
+    """Users comment model"""
+    __tablename__ = "comment"
+    id = db.Column(db.Integer, primary_key=True)
+    guestname = db.Column(db.String(150))
+    Comment = db.Column(db.Text)
+    date_created = db.Column(db.DateTime, default=func.now())
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
+    post = db.relationship('Post', back_populates ='comments')
+
     
 @app.route("/", methods=['GET', 'POST'])
 def sign_up():

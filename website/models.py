@@ -23,14 +23,15 @@ class Post(db.Model):
     date_created = db.Column(db.DateTime, default=func.now())
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     user = db.relationship('User', back_populates ='posts')
+    comments = db.relationship('Comment', back_populates ='post')
 
-
+    
 class Comment(db.Model):
     """Users comment model"""
     __tablename__ = "comment"
     id = db.Column(db.Integer, primary_key=True)
-    user = db.relationship('User', back_populates ='comments')
     guestname = db.Column(db.String(150))
     Comment = db.Column(db.Text)
-    post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
     date_created = db.Column(db.DateTime, default=func.now())
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
+    post = db.relationship('Post', back_populates ='comments')
