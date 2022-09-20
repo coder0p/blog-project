@@ -37,3 +37,17 @@ def create_post():
             return redirect(url_for('views.home'))
 
     return render_template('posts.html')
+
+
+@views.route("/delete/<int:id>/ ")
+@login_required
+def delete_post(id):
+    
+    post_to_delete = Post.query.filter_by(id=id).first_or_404( )
+    id = current_user.id
+    if id == post_to_delete.user_id:
+
+        db.session.delete(post_to_delete)
+        db.session.commit()
+        flash("post deleted",category='success')
+    return redirect (url_for('views.home'))

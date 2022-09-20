@@ -73,9 +73,13 @@
   <span class="badge bg-secondary">{{post.category}}</span>
   <p>
     {{post.content}}
-    
-
   </p>
+  {% if current_user.is_authenticated %}
+  {% if current_user.id == post.user_id%}
+  <span class="pull-right"><a class="text-danger" 
+    href="{{ url_for('views.delete_post', id=post.id) }}">delete</a></span>
+  {% endif %}
+  {% endif %}
 </div>
 {% endfor %}
 {% endif %}
