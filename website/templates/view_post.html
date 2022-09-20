@@ -3,22 +3,49 @@
 {% block content%}
 
 {% if post_view %}
-<h1 class="text-center pt-2">
-  <mark class="rounded-pill shadow-4">Latest posts</mark>
-</h1>
 {%for post in post_view%}
 <div class="container mt-4 shadow-4">
-  <div>
-    <i class="fas fa-user-circle"></i>
-    <span class="small">posted by {{post.user.username}}</span>
-    <i><small>{{post.date_created|timesago}}</small></i>
-  </div>
   <h2>{{post.title}}</h2>
-  <span class="badge bg-secondary">{{post.category}}</span>
   <p>
     {{post.content}}
   </p>
+
+  <!-- semantic ui -->
+<div>
+  <div class="ui comments">
+    <h3 class="ui dividing header">Comments</h3>
+    <div class="comment">
+      <a class="avatar">
+        <img src="/images/avatar/small/matt.jpg">
+      </a>
+      <div class="content">
+        <a class="author">{{post.user.username}}</a>
+        <div class="metadata">
+          <span class="date">Today at 5:42PM</span>
+        </div>
+        <div class="text">
+          How artistic!
+        </div>
+      </div>
+    </div>
+   
+  </div>
+  <div>
+
+    <form class="ui reply form">
+      <div class="field">
+        <input type="text" placeholder="name" >
+      <textarea></textarea>
+    </div>
+    <div class="ui blue labeled submit icon button">
+      <i class="icon edit"></i> <a class="btn btn-primary"
+      href="">Add comment</a> 
+    </div>
+  </form>
+</div>
+
+
+</div>
 {%endfor%}
 {%endif%}
-
 {% endblock %}

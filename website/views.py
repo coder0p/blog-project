@@ -54,7 +54,6 @@ def delete_post(id):
 
 
 @views.route("/viewpost/<int:id>/", methods=['GET', 'POST'])
-@login_required
 def view_post(id):
     
     post_view = Post.query.filter_by(id=id).all()

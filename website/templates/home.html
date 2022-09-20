@@ -73,22 +73,25 @@
     <span class="badge bg-secondary position-absolute top-0 end-0">
       <i class="fa-solid fa-star star"></i>
       {{post.category}}</span>
-    
-    
+
+
   </div>
   <p>
     {{post.content}}
   </p>
   <br>
-    {% if current_user.is_authenticated %}
-    {% if current_user.id == post.user_id%}
-    <a class="btn btn-danger btn-sm position-absolute bottom-0 end-0"
+  {% if current_user.is_authenticated %}
+  {% if current_user.id == post.user_id%}
+  <a class="btn btn-danger btn-sm position-absolute bottom-0 end-0"
     href="{{ url_for('views.delete_post', id=post.id) }}">delete</a>
   {% endif %}
   {% endif %}
 
-  <span class="pull-right"><a class="text-danger" 
-    href="{{ url_for('views.view_post', id=post.id) }}">view_post</a></span>
+  <span><a class="btn btn-primary" href="{{ url_for('views.view_post', id=post.id) }}">view post</a>
+    <a href="{{ url_for('views.view_post', id=post.id) }}">
+      <i class="fa-regular fa-comments"></i>
+    </a>
+  </span>
 </div>
 {% endfor %}
 {% endif %}
