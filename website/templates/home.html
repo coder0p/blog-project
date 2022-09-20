@@ -63,21 +63,27 @@
   <mark class="rounded-pill shadow-4">Latest posts</mark>
 </h1>
 {%for post in posts%}
-<div class="container mt-4 shadow-4">
-  <div>
-    <i class="fas fa-user-circle"></i>
-    <span class="small">posted by {{post.user.username}}</span>
-    <i><small>{{post.date_created|timesago}}</small></i>
+<div class="container mt-4 shadow-4 position-relative">
+  <div class="position-relative">
+    <h2 class="text-center">{{post.title}}</h2>
+    <span class="small position-absolute top-0 start-0">
+      <i class="fas fa-user-circle"></i>
+      posted by <strong>{{post.user.username}}</strong>
+      <i>{{post.date_created|timesago}}</i></span>
+    <span class="badge bg-secondary position-absolute top-0 end-0">
+      <i class="fa-solid fa-star star"></i>
+      {{post.category}}</span>
+    
+    
   </div>
-  <h2>{{post.title}}</h2>
-  <span class="badge bg-secondary">{{post.category}}</span>
   <p>
     {{post.content}}
   </p>
-  {% if current_user.is_authenticated %}
-  {% if current_user.id == post.user_id%}
-  <span class="pull-right"><a class="text-danger" 
-    href="{{ url_for('views.delete_post', id=post.id) }}">delete</a></span>
+  <br>
+    {% if current_user.is_authenticated %}
+    {% if current_user.id == post.user_id%}
+    <a class="btn btn-danger btn-sm position-absolute bottom-0 end-0"
+    href="{{ url_for('views.delete_post', id=post.id) }}">delete</a>
   {% endif %}
   {% endif %}
 </div>
