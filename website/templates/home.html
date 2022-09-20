@@ -67,12 +67,13 @@
   <div>
     <i class="fas fa-user-circle"></i>
     <span class="small">posted by {{post.user.username}}</span>
+    <i><small>{{post.date_created|timesago}}</small></i>
   </div>
   <h2>{{post.title}}</h2>
   <span class="badge bg-secondary">{{post.category}}</span>
   <p>
     {{post.content}}
-    {{post.date_created|timesago}}
+    
 
   </p>
 </div>

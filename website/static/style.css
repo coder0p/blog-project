@@ -1,5 +1,11 @@
 
-/* ------------------------------------------- */
+   /* content shrink into nav bar */
+
+   body{
+    padding-top: 70px;
+    
+  }
+
 
 /* base.html alert message   */
 
@@ -25,13 +31,6 @@
 
 
 
-
-   /* content shrink into nav bar */
-
-   body{
-    padding-top: 70px;
-    overflow: hidden;
-  }
 
 
 

@@ -20,6 +20,6 @@ class Post(db.Model):
     title = db.Column(db.String(150))
     category = db.Column(db.String(150))
     content = db.Column(db.Text, nullable=False)
-    date_created = db.Column(db.DateTime(timezone=True), default=func.now())
+    date_created = db.Column(db.DateTime, default=func.now())
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     user = db.relationship('User', back_populates ='posts')
