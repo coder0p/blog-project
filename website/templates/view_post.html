@@ -1,0 +1,24 @@
+{% extends "base.html" %}{% block title %}view_post{% endblock %}
+
+{% block content%}
+
+{% if post_view %}
+<h1 class="text-center pt-2">
+  <mark class="rounded-pill shadow-4">Latest posts</mark>
+</h1>
+{%for post in post_view%}
+<div class="container mt-4 shadow-4">
+  <div>
+    <i class="fas fa-user-circle"></i>
+    <span class="small">posted by {{post.user.username}}</span>
+    <i><small>{{post.date_created|timesago}}</small></i>
+  </div>
+  <h2>{{post.title}}</h2>
+  <span class="badge bg-secondary">{{post.category}}</span>
+  <p>
+    {{post.content}}
+  </p>
+{%endfor%}
+{%endif%}
+
+{% endblock %}

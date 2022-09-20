@@ -51,3 +51,12 @@ def delete_post(id):
         db.session.commit()
         flash("post deleted",category='success')
     return redirect (url_for('views.home'))
+
+
+@views.route("/viewpost/<int:id>/", methods=['GET', 'POST'])
+@login_required
+def view_post(id):
+    
+    post_view = Post.query.filter_by(id=id).all()
+    
+    return render_template("view_post.html",current_user=current_user, post_view=post_view)
