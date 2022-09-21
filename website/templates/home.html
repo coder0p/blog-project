@@ -77,7 +77,7 @@
 
   </div>
   <p>
-    {{post.content}}
+    {{post.content | trim}}<a href="{{ url_for('views.view_post', id=post.id) }}">more</a>
   </p>
   <br>
   {% if current_user.is_authenticated %}
@@ -87,9 +87,9 @@
   {% endif %}
   {% endif %}
 
-  <span><a class="btn btn-primary" href="{{ url_for('views.view_post', id=post.id) }}">view post</a>
-    <a href="{{ url_for('views.view_post', id=post.id) }}">
-      <i class="fa-regular fa-comments"></i>
+  <span>
+    <a class="btn btn-primary" href="{{ url_for('views.view_post', id=post.id) }}">
+      view post
     </a>
   </span>
 </div>

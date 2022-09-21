@@ -69,3 +69,15 @@ function labelVisible(){
 function labelInvisible(){
   document.getElementById("passwordLable").style.display = "none"
 }
+
+
+// comment view button funtionality
+
+function commentVisible(){
+  let commentSection = document.getElementById('comment');
+  if(commentSection.style.display == "block"){
+    commentSection.style.display = "none"
+  }else{
+    commentSection.style.display = "block"
+  }
+}
