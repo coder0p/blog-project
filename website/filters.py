@@ -11,7 +11,7 @@ def fromnow(date):
 
 def trim(content):
     if len(list(content)) > 200:
-        return "".join(list(content))[0:200]+"..."
+        return "".join(list(content))[0:200]+" ...."
 
     else:
-        return content
+        return content+" ...."

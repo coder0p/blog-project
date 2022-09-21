@@ -33,5 +33,5 @@ class Comment(db.Model):
     guestname = db.Column(db.String(150))
     Comment = db.Column(db.Text)
     date_created = db.Column(db.DateTime, default=func.now())
-    post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
     post = db.relationship('Post', back_populates ='comments')

@@ -20,42 +20,20 @@
 </div>
 
   <!-- semantic ui -->
-<div class="container mt-4 shadow-4"  id="comment">
-  <div class="ui comments">
-    <h3 class="ui dividing header">Comments</h3>
-    <div class="comment">
-      <a class="avatar">
-        <img src="https://semantic-ui.com/images/avatar2/small/matthew.png" width="35px" height="35px">
-      </a>
-      <div class="content">
-        <a class="author">{{post.user.username}}</a>
-        <div class="metadata">
-          <span class="date">Today at 5:42PM</span>
-        </div>
-        <div class="text">
-          How artistic!
-        </div>
-      </div>
-    </div>
-   
-  </div>
-  <div>
 
-    <form class="ui reply form">
-      <div class="field">
-        <input type="text" placeholder="name" >
-      <textarea></textarea>
-    </div>
-    <div class="ui blue labeled submit icon button">
-      <a class="btn btn-primary"
-      href="">Add comment</a> 
-    </div>
-  </form>
-</div>
+  <div class="container mt-4 shadow-4"  id="comment">
+  
+    <form action="{{ url_for('views.comments',id=post.id) }}" method="post" role="form">
+     <input type="text" name="name" placeholder="name" /><br><br>
+     <input type="text" name="comment" placeholder="comment"/><br><br>
+     <button type="submit">comment</button>
+     
+    </form>
+   </div>
 
 
 
-</div>
+
 {%endfor%}
 {%endif%}
 {% endblock %}

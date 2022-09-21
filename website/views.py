@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
-from .models import Post
+from .models import Post,Comment
 from . import db
 
 views = Blueprint("views", __name__)
@@ -59,3 +59,27 @@ def view_post(id):
     post_view = Post.query.filter_by(id=id).all()
     
     return render_template("view_post.html",current_user=current_user, post_view=post_view)
+
+
+@views.route("/comment/<int:id>", methods=['GET', 'POST'])
+def comments(id):
+    post_view = Post.query.filter_by(id=id).all()
+    if request.method == "POST":
+        print('yahooo')
+        guestname = request.form.get('name')
+        Comment_ = request.form.get('comment')
+        print('jhvjgfj')
+        if not guestname :
+            flash('guest items cannot be empty', category='error')
+        elif not Comment_:
+            flash('comment items cannot be empty', category='error')
+        else:
+            print('dfgdbdgbhf')
+            post = Comment(guestname =guestname, Comment=Comment_, post_id=id)
+            db.session.add(post)
+            db.session.commit()
+            flash('commented........!', category='success')    
+            return redirect(url_for("views.view_post",id = id ))
+    else:
+        flash("its not working")
+    return render_template("view_post.html" ,post_view = post_view)
