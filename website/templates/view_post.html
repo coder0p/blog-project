@@ -36,4 +36,17 @@
 
 {%endfor%}
 {%endif%}
+
+
+<div>
+  {%if mycomment%}
+   {%for comment in mycomment%}
+  <br>
+   {{ comment.guestname }}<br>
+   {{ comment.Comment }}<br>
+   {{ comment.date_created |timesago }}
+  
+   {% endfor %}
+  {% endif %}
+  </div>
 {% endblock %}
