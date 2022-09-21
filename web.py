@@ -32,9 +32,9 @@ class Post(db.Model):
     category = db.Column(db.String(150))
     content = db.Column(db.Text, nullable=False)
     date_created = db.Column(db.DateTime, default=func.now())
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     user = db.relationship('User', back_populates ='posts')
-    comments = db.relationship('Comment', back_populates ='post')
+    comments = db.relationship('Comment', back_populates ='post', passive_deletes=True)
 
     
 class Comment(db.Model):
@@ -45,7 +45,8 @@ class Comment(db.Model):
     Comment = db.Column(db.Text)
     date_created = db.Column(db.DateTime, default=func.now())
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
-    post = db.relationship('Post', back_populates ='comments')
+    post = db.relationship('Post', back_populates ='comments', passive_deletes=True)
+
 
     
 @app.route("/", methods=['GET', 'POST'])
@@ -78,5 +79,6 @@ def sign_up():
 
 if __name__ == "__main__":
     db.create_all()
+   # db.drop_all()
     print('Creating database is success...')
    # app.run(debug=True)
