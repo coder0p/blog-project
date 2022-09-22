@@ -21,9 +21,9 @@ class Post(db.Model):
     category = db.Column(db.String(150))
     content = db.Column(db.Text, nullable=False)
     date_created = db.Column(db.DateTime, default=func.now())
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id',ondelete="CASCADE"), nullable=False)
     user = db.relationship('User', back_populates ='posts')
-    comments = db.relationship('Comment', back_populates ='post')
+    comments = db.relationship('Comment', back_populates ='post', passive_deletes=True)
 
     
 class Comment(db.Model):
@@ -33,5 +33,5 @@ class Comment(db.Model):
     guestname = db.Column(db.String(150))
     Comment = db.Column(db.Text)
     date_created = db.Column(db.DateTime, default=func.now())
-    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
-    post = db.relationship('Post', back_populates ='comments')
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id',ondelete="CASCADE"), nullable=False)
+    post = db.relationship('Post', back_populates ='comments', passive_deletes=True)
