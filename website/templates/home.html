@@ -15,24 +15,6 @@
       <i class="fas fa-bars"></i>
     </button>
 
-        <!-- Category  icon -->
-
-        <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" 
-          id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown button
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <li><a class="dropdown-item" href="#">
-        
-          {% for post in posts%}
-             <li> {{post.category}}</li>
-         {%endfor%}
-            </a></li>
-        
-          </ul>
-        </div>
-
     <!-- Post icon -->
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ms-auto align-items-center">
@@ -74,26 +56,45 @@
   </div>
 </nav>
 
+<!-- Category  icon -->
+
+<div class="dropdown">
+  <button class="btn btn-dark btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+    aria-expanded="false">
+    Categories
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+    {% for post in posts%}
+    <li>
+      <a class="dropdown-item" href="#">
+        {{post.category}}
+      </a>
+    </li>
+    {%endfor%}
+  </ul>
+</div>
+
 
 <!-- Displaying created post in home page -->
 {% if posts %}
 <h1 class="text-center pt-2">
-  <mark class="rounded-pill shadow-4">Latest posts</mark>
+  <mark class="rounded-pill shadow-4">Recent posts</mark>
 </h1>
 {%for post in posts%}
 <div class="container mt-4 shadow-4 position-relative">
   <div class="position-relative">
-    <h2 class="text-center">{{post.title}}</h2>
     <span class="small position-absolute top-0 start-0">
       <i class="fas fa-user-circle"></i>
       posted by <strong>{{post.user.username}}</strong>
       <i>{{post.date_created|timesago}}</i></span>
-    <span class="badge bg-secondary position-absolute top-0 end-0">
+    <span class="badge bg-dark position-absolute top-0 end-0 ">
       <i class="fa-solid fa-star star"></i>
       {{post.category}}</span>
-
-
   </div>
+
+  <br>
+
+  <h2>{{post.title}}</h2>
   <p>
     {{post.content | trim}}<a href="{{ url_for('views.view_post', id=post.id) }}">more</a>
   </p>

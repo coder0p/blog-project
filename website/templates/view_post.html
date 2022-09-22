@@ -1,57 +1,107 @@
-{% extends "base.html" %}{% block title %}view_post{% endblock %}
+{% extends "base.html" %}{% block title %}View post{% endblock %}
 
 {% block content%}
 
 {% if post_view %}
 {%for post in post_view%}
-<div class="container mt-4 shadow-4">
-  
+<div class="container mt-4 shadow-4 position-relative">
 
-    <h2>{{post.title}}</h2>
-    <p>
-      {{post.content}}
-    </p>
-  </div>
-<hr/>
 
-<div class="mt-4">
-  <button class="btn btn-primary"
-  onclick="commentVisible()" >View comment <i class="fa-regular fa-comments"></i></button> 
+  <h2>{{post.title}}</h2>
+  <p>
+    {{post.content}}
+  </p>
+  <span class="small position-absolute top-0 end-0 badge bg-dark ">
+    author: 
+    <i class="fas fa-user-circle ms-2"></i>
+    <strong>{{post.user.username}}</strong>
+  </span>
 </div>
-
-  <!-- semantic ui -->
-
-  <div class="container mt-4 shadow-4"  id="comment">
-    {% if current_user.is_authenticated %}
-    <form action="{{ url_for('views.comments',id=post.id) }}" method="post" role="form">
-     <input type="text" name="comment" placeholder="comment"/><br><br>
-     <button type="submit">comment</button>
-     {%else%}
-     <form action="{{ url_for('views.comments',id=post.id) }}" method="post" role="form">
-      <input type="text" name="name" placeholder="name" /><br><br>
-      <input type="text" name="comment" placeholder="comment"/><br><br>
-      <button type="submit">comment</button>
-    </form>
-    {% endif %}
-
-   </div>
+<hr />
 
 
+<!-- Posted comment -->
 
+{%if mycomment%}
+{%for comment in mycomment%}
+<div class="card mb-3">
+  <div class="card-body">
+    <div class="d-flex flex-start">
+      <img class="rounded-circle shadow-1-strong me-3"
+        src="https://i.pinimg.com/originals/25/00/0e/25000eecbc5abeb4e27223d0e515be16.jpg" alt="avatar" width="40"
+        height="40" />
+      <div class="w-100">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h6 class="text-primary fw-bold mb-0">
+            {{ comment.guestname }}
+            <span class="text-dark ms-2">{{ comment.Comment }}
+            </span>
+          </h6>
+          <p class="mb-0">{{ comment.date_created |timesago }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+{% endif %}
+
+
+<!-- Create Comment -->
+
+  <!-- Registered user comment -->
+
+<div class="container mt-4 shadow-4">
+  {% if current_user.is_authenticated %}
+  <form action="{{ url_for('views.comments',id=post.id) }}" method="post" role="form">
+    <div class="card-footer py-3 border-0" style="background-color: #f8f9fa;">
+      <div class="d-flex flex-start w-100">
+        <img class="rounded-circle shadow-1-strong me-3"
+          src="https://i.pinimg.com/originals/25/00/0e/25000eecbc5abeb4e27223d0e515be16.jpg" alt="avatar" width="40"
+          height="40" />
+        <div class="form-outline w-100">
+          <textarea class="form-control" id="textAreaExample" rows="4" style="background: #fff;"
+            name="comment"></textarea>
+          <label class="form-label" for="textAreaExample">Comment</label>
+        </div>
+
+      </div>
+      <div class="float-end mt-2 pt-1">
+        <button type="submit" class="btn btn-primary btn-sm">Post comment</button>
+      </div>
+    </div>
+  </form>
+
+  {% else %}
+<!-- Guest user comment -->
+  <form action="{{ url_for('views.comments',id=post.id) }}" method="post" role="form">
+    <div class="card-footer py-3 border-0" style="background-color: #f8f9fa;">
+      <div class="form-outline mb-3">
+        <input type="text" id="name" class="form-control" name="name" />
+        <label class="form-label" for="name">Name</label>
+      </div>
+
+      <div class="d-flex flex-start w-100">
+        <img class="rounded-circle shadow-1-strong me-3"
+          src="https://i.pinimg.com/originals/25/00/0e/25000eecbc5abeb4e27223d0e515be16.jpg" alt="avatar" width="40"
+          height="40" />
+        <div class="form-outline w-100">
+          <textarea class="form-control" id="textAreaExample" rows="4" style="background: #fff;"
+            name="comment"></textarea>
+          <label class="form-label" for="textAreaExample">Comment</label>
+        </div>
+      </div>
+
+      <div class="float-end mt-2 pt-1">
+        <button type="submit" class="btn btn-primary btn-sm">Post comment</button>
+      </div>
+    </div>
+  </form>
+  {% endif %}
+
+</div>
 
 {%endfor%}
 {%endif%}
 
-
-<div>
-  {%if mycomment%}
-   {%for comment in mycomment%}
-  <br>
-   {{ comment.guestname }}<br>
-   {{ comment.Comment }}<br>
-   {{ comment.date_created |timesago }}
-  
-   {% endfor %}
-  {% endif %}
-  </div>
 {% endblock %}

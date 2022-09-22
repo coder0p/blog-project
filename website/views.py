@@ -42,14 +42,10 @@ def create_post():
 @views.route("/delete/<int:id>/ ")
 @login_required
 def delete_post(id):
-   # comments_ = Comment.query.filter_by(post_id=id).order_by(Comment.date_created.desc()).all()
-    
     post_to_delete = Post.query.filter_by(id=id).first_or_404( )
     id = current_user.id
     if id == post_to_delete.user_id:
-
         db.session.delete(post_to_delete)
-    #    db.session.delete(comments_)
         db.session.commit()
         flash("post deleted",category='success')
     return redirect (url_for('views.home'))
@@ -68,18 +64,27 @@ def comments(id):
     post_view = Post.query.filter_by(id=id).all()
     if request.method == "POST":
         guestname = request.form.get('name')
-        Comment_ = request.form.get('comment')       
-        if not guestname :
-            flash('name cannot be empty', category='error')
-        if not Comment_:
-            flash('comment section cannot be empty', category='error')
+        Comment_ = request.form.get('comment')
+        
+        if current_user.is_authenticated:
+            if not Comment_:
+                flash('comment section cannot be empty', category='error')
+                return redirect(url_for('views.view_post',id=id))
         else:
-            if current_user.is_authenticated:
-                post = Comment(guestname =current_user.username, Comment=Comment_, post_id=id)                
-            else:
-                post = Comment(guestname =guestname, Comment=Comment_, post_id=id)
-            db.session.add(post)
-            db.session.commit()
-            flash('commentt........!', category='success')
-            return redirect(url_for('views.view_post',id=id))
+            if not guestname :
+                flash('name section cannot be empty', category='error')
+                return redirect(url_for('views.view_post',id=id))
+            if not Comment_:
+                flash('comment section cannot be empty', category='error')
+                return redirect(url_for('views.view_post',id=id))
+            
+        if current_user.is_authenticated:
+            post = Comment(guestname =current_user.username, Comment=Comment_, post_id=id)                
+        else:
+            post = Comment(guestname =guestname, Comment=Comment_, post_id=id)
+        db.session.add(post)
+        db.session.commit()
+        flash(f'{post.guestname} commented!', category='success')
+        return redirect(url_for('views.view_post',id=id))
+        
     return render_template('view_post.html',post_view=post_view)
