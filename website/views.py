@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
-from .models import Post,Comment
+from .models import Post,Comment,Category
 from . import db
 
 views = Blueprint("views", __name__)
@@ -10,7 +10,9 @@ views = Blueprint("views", __name__)
 @views.route("/home")
 def home():
     posts = Post.query.order_by(Post.date_created.desc()).all()
-    return render_template("home.html",current_user=current_user, posts=posts)
+    category = Category.query.all()
+    return render_template("home.html",current_user=current_user, posts=posts,category=category)
+
 
 
 
@@ -18,25 +20,30 @@ def home():
 @login_required
 def create_post():
     if request.method == "POST":
-        Category_ = request.form.get('Category')
+        cat = request.form.get('Category')
         title = request.form.get('title')
         content = request.form.get('content')
-       
-
-        if not Category_ :
+        if not cat :
             flash('Input items cannot be empty', category='error')
         elif not title:
             flash('Input items cannot be empty', category='error')
         elif not content:
             flash('Input items cannot be empty', category='error')
         else:
-            post = Post(title =title, category=Category_, content=content, user_id=current_user.id)
+            category = Category.query.filter_by(category = cat).first()
+            if category:
+                post = Post(title =title,category = category ,content=content, user_id=current_user.id)
+            else:
+                category = Category(category = cat,cat_user =current_user.id )
+                db.session.add(category)
+                db.session.commit()
+                post = Post(title =title,category = category, content=content, user_id=current_user.id)
             db.session.add(post)
             db.session.commit()
             flash('Post created!', category='success')
             return redirect(url_for('views.home'))
-
     return render_template('posts.html')
+
 
 
 @views.route("/delete/<int:id>/ ")
