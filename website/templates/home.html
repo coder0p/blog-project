@@ -64,10 +64,16 @@
     Categories
   </button>
   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-    {% for post in posts%}
+    {% for cat in category%}
     <li>
       <a class="dropdown-item" href="#">
-        {{post.category}}
+        {{cat.category}}
+        <form method="post" action="{{ url_for('views.del_category',id=cat.id) }}">
+          <button type="submit">
+           del
+          </button>
+        </form>
+        
       </a>
     </li>
     {%endfor%}
@@ -89,7 +95,7 @@
       <i>{{post.date_created|timesago}}</i></span>
     <span class="badge bg-dark position-absolute top-0 end-0 ">
       <i class="fa-solid fa-star star"></i>
-      {{post.category}}</span>
+      {{post.category.category}}</span>
   </div>
 
   <br>

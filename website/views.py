@@ -111,3 +111,25 @@ def add_category():
             flash("category added..")
             return redirect(url_for('views.home'))
     return render_template('home.html')
+
+    
+
+@views.route("/category_del/<int:id>/", methods=['GET','POST'])
+@login_required
+def del_category(id):
+    cat =  Category.query.filter_by(id=id).first()
+    if request.method == "POST":
+        print("thh")
+        if not cat :
+            flash('Input items cannot be empty', category='error')
+        else:
+            print(cat.cat_user)
+            if current_user.id == cat.cat_user:
+                db.session.delete(cat)    
+                db.session.commit()
+                flash("category added..")
+            else:
+                flash('jhdvcjhad')
+            return redirect(url_for('views.home'))
+    print("dasdas")
+    return render_template('home.html')
