@@ -95,3 +95,19 @@ def comments(id):
         return redirect(url_for('views.view_post',id=id))
         
     return render_template('view_post.html',post_view=post_view)
+
+
+@views.route("/category", methods=['GET','POST'])
+@login_required
+def add_category():
+    if request.method == "POST":
+        cat = request.form.get('category')
+        if not cat :
+            flash('Input items cannot be empty', category='error')
+        else:
+            category = Category(category = cat,cat_user =current_user.id )
+            db.session.add(category)    
+            db.session.commit()
+            flash("category added..")
+            return redirect(url_for('views.home'))
+    return render_template('home.html')

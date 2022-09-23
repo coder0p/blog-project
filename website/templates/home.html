@@ -115,4 +115,19 @@
 {% endfor %}
 {% endif %}
 
+
+<!--add  category  -->
+<form name ="category" method ="POST" 
+action="{{ url_for('views.add_category') }}">
+   <div class="form-outline mb-4">
+    <input type="text" name="category" id="form4Example2" class="form-control" />
+    <label class="form-label" for="form4Example2">category</label>
+    
+  </div>
+  <button type ="submit" value ="button">
+    Add
+  </button>
+</form>
+
+
 {% endblock %}
