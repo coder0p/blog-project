@@ -8,9 +8,17 @@
 
 
   <h2>{{post.title}}</h2>
-  <p>
+  <em>
     {{post.content}}
-  </p>
+  </em>
+  
+  {% if current_user.is_authenticated %}
+  {% if current_user.id == post.user_id%}
+  <a class="btn btn-danger btn-sm position-absolute bottom-0 end-0"
+    href="{{ url_for('views.delete_post', id=post.id) }}">delete post</a>
+  {% endif %}
+  {% endif %}
+
   <span class="small position-absolute top-0 end-0 badge bg-dark ">
     author: 
     <i class="fas fa-user-circle ms-2"></i>
@@ -34,8 +42,8 @@
         <div class="d-flex justify-content-between align-items-center mb-3">
           <h6 class="text-primary fw-bold mb-0">
             {{ comment.guestname }}
-            <span class="text-dark ms-2">{{ comment.Comment }}
-            </span>
+            <em class="text-dark ms-2">{{ comment.Comment }}
+            </em>
           </h6>
           <p class="mb-0">{{ comment.date_created |timesago }}</p>
         </div>
@@ -103,5 +111,7 @@
 
 {%endfor%}
 {%endif%}
+
+
 
 {% endblock %}

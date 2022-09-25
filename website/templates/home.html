@@ -57,28 +57,35 @@
 </nav>
 
 <!-- Category  icon -->
-
-<div class="dropdown">
-  <button class="btn btn-dark btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
-    aria-expanded="false">
-    Categories
-  </button>
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-    {% for cat in category%}
-    <li>
-      <a class="dropdown-item" href="#">
-        {{cat.category}}
-        <form method="post" action="{{ url_for('views.del_category',id=cat.id) }}">
-          <button type="submit">
-           del
-          </button>
-        </form>
-        
-      </a>
-    </li>
-    {%endfor%}
+<div class="btn-group">
+  <button
+  type="button"
+  class="btn btn-sm btn-dark dropdown-toggle dropdown-toggle-split"
+  data-mdb-toggle="dropdown"
+  aria-expanded="false"
+  >
+  Categories
+</button>
+<ul class="dropdown-menu">
+  {% for cat in category %}
+  <li>
+    <a class="dropdown-item position-relative" href="#">
+      {{cat.category}}
+      {% if current_user.is_authenticated %}
+      {% if cat.cat_user == current_user.id %}
+      <form method="post" action="{{ url_for('views.del_category',id=cat.id) }}" class="position-absolute top-50 start-100 translate-middle">
+        <button type="submit" class="btn btn-danger btn-sm">
+          <i class="fa-regular fa-square-minus"></i>
+        </button>
+      </form>
+      {% endif %}
+      {% endif %}
+    </a>
+  </li>
+    {% endfor %}
   </ul>
 </div>
+
 
 
 <!-- Displaying created post in home page -->
@@ -105,12 +112,7 @@
     {{post.content | trim}}<a href="{{ url_for('views.view_post', id=post.id) }}">more</a>
   </p>
   <br>
-  {% if current_user.is_authenticated %}
-  {% if current_user.id == post.user_id%}
-  <a class="btn btn-danger btn-sm position-absolute bottom-0 end-0"
-    href="{{ url_for('views.delete_post', id=post.id) }}">delete</a>
-  {% endif %}
-  {% endif %}
+ 
 
   <span>
     <a class="btn btn-primary" href="{{ url_for('views.view_post', id=post.id) }}">
@@ -120,20 +122,6 @@
 </div>
 {% endfor %}
 {% endif %}
-
-
-<!--add  category  -->
-<form name ="category" method ="POST" 
-action="{{ url_for('views.add_category') }}">
-   <div class="form-outline mb-4">
-    <input type="text" name="category" id="form4Example2" class="form-control" />
-    <label class="form-label" for="form4Example2">category</label>
-    
-  </div>
-  <button type ="submit" value ="button">
-    Add
-  </button>
-</form>
 
 
 {% endblock %}

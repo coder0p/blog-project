@@ -78,3 +78,15 @@
    from {opacity :1;}
    to {opacity :0;}
 }
+
+
+
+.add-category-btn, .start-50{
+  left: 23% !important;
+}
+
+#category-form{
+  display: none;
+}
+
+

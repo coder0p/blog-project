@@ -42,14 +42,15 @@ def create_post():
             db.session.commit()
             flash('Post created!', category='success')
             return redirect(url_for('views.home'))
-    return render_template('posts.html')
+    category = Category.query.all()
+    return render_template('posts.html', categories = category)
 
 
 
 @views.route("/delete/<int:id>/ ")
 @login_required
 def delete_post(id):
-    post_to_delete = Post.query.filter_by(id=id).first_or_404( )
+    post_to_delete = Post.query.filter_by(id=id).first_or_404()
     id = current_user.id
     if id == post_to_delete.user_id:
         db.session.delete(post_to_delete)
@@ -71,24 +72,24 @@ def comments(id):
     post_view = Post.query.filter_by(id=id).all()
     if request.method == "POST":
         guestname = request.form.get('name')
-        Comment_ = request.form.get('comment')
+        comment = request.form.get('comment')
         
         if current_user.is_authenticated:
-            if not Comment_:
+            if not comment:
                 flash('comment section cannot be empty', category='error')
                 return redirect(url_for('views.view_post',id=id))
         else:
             if not guestname :
                 flash('name section cannot be empty', category='error')
                 return redirect(url_for('views.view_post',id=id))
-            if not Comment_:
+            if not comment:
                 flash('comment section cannot be empty', category='error')
                 return redirect(url_for('views.view_post',id=id))
             
         if current_user.is_authenticated:
-            post = Comment(guestname =current_user.username, Comment=Comment_, post_id=id)                
+            post = Comment(guestname =current_user.username, Comment=comment, post_id=id)                
         else:
-            post = Comment(guestname =guestname, Comment=Comment_, post_id=id)
+            post = Comment(guestname =guestname, Comment=comment, post_id=id)
         db.session.add(post)
         db.session.commit()
         flash(f'{post.guestname} commented!', category='success')
@@ -105,31 +106,33 @@ def add_category():
         if not cat :
             flash('Input items cannot be empty', category='error')
         else:
-            category = Category(category = cat,cat_user =current_user.id )
-            db.session.add(category)    
-            db.session.commit()
-            flash("category added..")
-            return redirect(url_for('views.home'))
-    return render_template('home.html')
+            category_exist = Category.query.filter_by(category = cat).first()
+            if category_exist:
+                flash("category added..")
+                return redirect(url_for('views.create_post'))
+        category = Category(category = cat,cat_user =current_user.id)
+        db.session.add(category)    
+        db.session.commit()
+        flash("category added..")
+        return redirect(url_for('views.create_post'))
+    return render_template('posts.html')
 
     
 
 @views.route("/category_del/<int:id>/", methods=['GET','POST'])
 @login_required
 def del_category(id):
+    get_cat=Post.query.filter_by(category_id=id).first()
     cat =  Category.query.filter_by(id=id).first()
     if request.method == "POST":
-        print("thh")
         if not cat :
             flash('Input items cannot be empty', category='error')
         else:
-            print(cat.cat_user)
             if current_user.id == cat.cat_user:
-                db.session.delete(cat)    
+                db.session.delete(cat)
                 db.session.commit()
-                flash("category added..")
+                flash("category deleted...")
             else:
-                flash('jhdvcjhad')
+                flash('not worked', category='error')
             return redirect(url_for('views.home'))
-    print("dasdas")
     return render_template('home.html')

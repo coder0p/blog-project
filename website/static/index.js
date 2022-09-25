@@ -64,10 +64,22 @@ function formValidation() {
 // registration password condditioned label 
 
 function labelVisible(){
-  document.getElementById("passwordLable").style.display = "inline"
+  document.getElementById("passwordLable").style.display = "inline";
 }
 function labelInvisible(){
-  document.getElementById("passwordLable").style.display = "none"
+  document.getElementById("passwordLable").style.display = "none";
 }
+
+
+function categoryInput(){
+  form = document.getElementById('category-form');
+  if(form.style.display == "block"){
+    form.style.display = "none";
+  }else{
+    form.style.display = "block";
+  }
+}
+
+
 
 

@@ -1,34 +1,71 @@
-{% extends "base.html" %} {% block title %}Create post{% endblock %} 
+{% extends "base.html" %} {% block title %}Create post{% endblock %}
 
-{% block content %} 
+{% block content %}
 
 <div class="container">
 
-    <h1 class="text-center pt-2">Create Post</h1>
-  
-    <form method="post" name="form">
-      <!-- Title input -->
-      <div class="form-outline mb-4">
-        <input type="text" name="title" id="form4Example2" class="form-control" />
-        <label class="form-label" for="form4Example2">Title</label>
-      </div>
-      
-      <!-- category input -->
-      <div class="form-outline mb-4">
-        <input type="text" name="Category" id="form4Example1" class="form-control" />
-        <label class="form-label" for="form4Example1">Category</label>
-      </div>
-    
-    
-      <!-- Content input -->
-      <div class="form-outline mb-4">
-        <textarea class="form-control" name="content" id="form4Example3" rows="4"></textarea>
-        <label class="form-label" for="form4Example3">Share your thoughts</label>
-      </div>
-     
-      <!-- Submit button -->
-      <button type="submit" class="btn btn-primary b mb-4">Post</button>
-    </form>
+  <h1 class="text-center pt-2">Create Post</h1>
+
+
+   <!-- category -->
+ 
+   <div class="btn-group">
+    <button class="btn btn-dark btn-sm" type="button" onclick="categoryInput()" id="cat-btn">Add your
+      categories</button>
   </div>
-  
+
+
+  <!--Add  category  -->
+  <form name="category" method="POST" action="{{ url_for('views.add_category') }}" class="mt-2" id="category-form">
+    <div class="mb-4 position-relative">
+      <div class="form-outline w-25">
+        <input type="text" name="category" class="form-control" />
+        <label class="form-label" for="form4Example2">category</label>
+      </div>
+      <button type="submit" value="button"
+        class="btn btn-primary btn-sm  position-absolute top-50 start-50 translate-middle add-category-btn">
+        <i class="fa-solid fa-plus"></i>
+      </button>
+    </div>
+  </form>
+
+
+  <!-- Post creation form -->
+
+  <form method="post" name="form" class="pt-4">
+    <!-- Title input -->
+    <div class="form-outline mb-4">
+      <input type="text" name="title" id="form4Example2" class="form-control" />
+      <label class="form-label" for="form4Example2">Title</label>
+    </div>
+
+    <!-- category input -->
+
+    <div class="mb-4 =">
+      <div class="select-div">
+        <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="Category">
+          <option selected>Select category</option>
+          {% for category in categories%}
+          <option value="{{category.category}}">{{category.category}}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+
+
+    <!-- Content input -->
+    <div class="form-outline mb-4">
+      <textarea class="form-control" name="content" id="form4Example3" rows="4"></textarea>
+      <label class="form-label" for="form4Example3">Share your thoughts</label>
+    </div>
+
+    <!-- Submit button -->
+    <button type="submit" class="btn btn-primary b mb-4">Post</button>
+  </form>
+
+</div>
+
+
+
+
 {% endblock %}
