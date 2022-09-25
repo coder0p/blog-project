@@ -46,6 +46,7 @@ class Comment(db.Model):
     post_id = db.Column(db.Integer, db.ForeignKey('post.id',ondelete="CASCADE"), nullable=False)
     post = db.relationship('Post', back_populates ='comments', passive_deletes=True)
     
+    
 class Like(db.Model):
     """Users like model"""
     __tablename__ = "like"

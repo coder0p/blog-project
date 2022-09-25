@@ -119,16 +119,10 @@
       view post
     </a>
   </span>
-  
-</div>
-{% endfor %}
-{% endif %}
-
-<!-- Like view -->
+  <!-- Like view -->
 
 {% if current_user.is_authenticated %}
 <div id="posts">
-  {% for post in posts %}
   <div class="card border-dark">
     <div class="card-header d-flex justify-content-between align-items-center">
       <div>
@@ -151,8 +145,12 @@
     </div>
   </div>
         {% endif %}
-        {%endfor%}
         {% endif %}
+</div>
+{% endfor %}
+{% endif %}
+
+
 
 
 {% endblock %}
