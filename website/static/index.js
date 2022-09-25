@@ -71,6 +71,8 @@ function labelInvisible(){
 }
 
 
+
+// 
 function categoryInput(){
   form = document.getElementById('category-form');
   if(form.style.display == "block"){
@@ -95,12 +97,9 @@ function like(postId) {
     .then((data) => {console.log(data)
       likeCount.innerHTML = data["likes"];
       if (data["liked"] === true) {
-        likeButton.className = "fas fa-thumbs-up";
+        likeButton.className = "fa-solid fa-hands-clapping text-primary fa-lg";
       } else {
-        likeButton.className = "far fa-thumbs-up";
+        likeButton.className = "fa-solid fa-hands-clapping fa-lg";
       }
     })
 }
-
-
-

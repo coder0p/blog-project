@@ -1,3 +1,4 @@
+from turtle import pos
 from flask import Blueprint, render_template, request, flash, redirect, url_for,jsonify
 from flask_login import login_required, current_user
 from .models import Post,Comment,Category,Like
@@ -122,7 +123,6 @@ def add_category():
 @views.route("/category_del/<int:id>/", methods=['GET','POST'])
 @login_required
 def del_category(id):
-    get_cat=Post.query.filter_by(category_id=id).first()
     cat =  Category.query.filter_by(id=id).first()
     if request.method == "POST":
         if not cat :

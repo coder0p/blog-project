@@ -58,30 +58,27 @@
 
 <!-- Category  icon -->
 <div class="btn-group">
-  <button
-  type="button"
-  class="btn btn-sm btn-dark dropdown-toggle dropdown-toggle-split"
-  data-mdb-toggle="dropdown"
-  aria-expanded="false"
-  >
-  Categories
-</button>
-<ul class="dropdown-menu">
-  {% for cat in category %}
-  <li>
-    <a class="dropdown-item position-relative" href="#">
-      {{cat.category}}
-      {% if current_user.is_authenticated %}
-      {% if cat.cat_user == current_user.id %}
-      <form method="post" action="{{ url_for('views.del_category',id=cat.id) }}" class="position-absolute top-50 start-100 translate-middle">
-        <button type="submit" class="btn btn-danger btn-sm">
-          <i class="fa-regular fa-square-minus"></i>
-        </button>
-      </form>
-      {% endif %}
-      {% endif %}
-    </a>
-  </li>
+  <button type="button" class="btn btn-sm btn-dark dropdown-toggle dropdown-toggle-split" data-mdb-toggle="dropdown"
+    aria-expanded="false">
+    Categories
+  </button>
+  <ul class="dropdown-menu">
+    {% for cat in category %}
+    <li>
+      <a class="dropdown-item position-relative" href="#">
+        {{cat.category}}
+        {% if current_user.is_authenticated %}
+        {% if cat.cat_user == current_user.id %}
+        <form method="post" action="{{ url_for('views.del_category',id=cat.id) }}"
+          class="position-absolute top-50 start-100 translate-middle">
+          <button type="submit" class="btn btn-danger btn-sm">
+            <i class="fa-regular fa-square-minus"></i>
+          </button>
+        </form>
+        {% endif %}
+        {% endif %}
+      </a>
+    </li>
     {% endfor %}
   </ul>
 </div>
@@ -91,7 +88,7 @@
 <!-- Displaying created post in home page -->
 {% if posts %}
 <h1 class="text-center pt-2">
-  <mark class="rounded-pill shadow-4">Recent posts</mark>
+  <mark class="rounded-pill shadow-4 border border-secondary">Recent posts</mark>
 </h1>
 {%for post in posts%}
 <div class="container mt-4 shadow-4 position-relative">
@@ -112,45 +109,40 @@
     {{post.content | trim}}<a href="{{ url_for('views.view_post', id=post.id) }}">more</a>
   </p>
   <br>
- 
+
 
   <span>
-    <a class="btn btn-primary" href="{{ url_for('views.view_post', id=post.id) }}">
+    <a class="btn btn-sm btn-primary" href="{{ url_for('views.view_post', id=post.id) }}">
       view post
     </a>
   </span>
+
+  <hr class="text-primary"/>
+
   <!-- Like view -->
 
-{% if current_user.is_authenticated %}
-<div id="posts">
-  <div class="card border-dark">
-    <div class="card-header d-flex justify-content-between align-items-center">
-      <div>
-        <span id="likes-count-{{post.id}}">
-        {{ post.likes|length }}</span> 
-        {% if current_user.id in post.likes|map(attribute="user_id")|list %}
-        <i
-          class="fas fa-thumbs-up"
-          id="like-button-{{post.id}}"
-          onclick="like({{post.id}})"
-        ></i> 
-        {% else %}
-        <i 
-          class="far fa-thumbs-up"
-          id="like-button-{{post.id}}"
-          onclick="like({{post.id}})"
-        ></i>
-        </div>
-      </div>
-    </div>
+  {% if current_user.is_authenticated %}
+  <div title="clap" class="p-2">
+    <span id="likes-count-{{post.id}}">
+      {{ post.likes|length }}</span>
+    {% if current_user.id in post.likes|map(attribute="user_id")|list %}
+    <i class="fa-solid fa-hands-clapping fa-lg" id="like-button-{{post.id}}" onclick="like({{post.id}})"></i>
+    {% else %}
+    <i class="fa-solid fa-hands-clapping fa-lg" id="like-button-{{post.id}}" onclick="like({{post.id}})"></i>
   </div>
-        {% endif %}
-        {% endif %}
+  {% endif %}
+  {% endif %}
 </div>
 {% endfor %}
 {% endif %}
 
-
-
-
-{% endblock %}
+<!-- Copyright -->
+{% if posts %}
+<footer class="bg-light text-center text-lg-start mt-5 border rounded-top">
+  <!-- Copyright -->
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+    © 2022 Copyright:
+    <a class="text-dark" href="{{ url_for('views.home') }}">thinkpad.blog</a>
+  </div>
+  {% endif %}
+</footer {% endblock %}
