@@ -12,7 +12,8 @@ class User(db.Model,UserMixin):
     password = db.Column(db.String(150))
     posts = db.relationship('Post', back_populates ='user')
     likes = db.relationship('Like', back_populates ='user', passive_deletes=True)
-    
+    image_ = db.relationship('Image', back_populates='image_', passive_deletes=True)
+
 
 class Category(db.Model):
     """Users category model"""
@@ -58,3 +59,13 @@ class Like(db.Model):
         'post.id', ondelete="CASCADE"), nullable=False)
     user = db.relationship('User', back_populates='likes', passive_deletes=True)
     posts = db.relationship('Post', back_populates='likes', passive_deletes=True)
+    
+class Image(db.Model):
+    """Users image model"""
+    __tablename__ = "image"
+    id = db.Column(db.Integer, primary_key=True)
+    img=db.Column(db.LargeBinary,unique=False,nullable=False)
+    img_name=db.Column(db.Text,nullable=False)
+    type=db.Column(db.Text,nullable=False)
+    user_id = db.Column(db.Integer,db.ForeignKey('users.id', ondelete="CASCADE"), nullable=False)
+    image_ = db.relationship('User', back_populates='image_', passive_deletes=True)
