@@ -101,13 +101,13 @@
 
   <h2>{{post.title}}</h2>
   <p>
-    {{post.content | trim}}<a href="{{ url_for('views.view_post', id=post.id) }}">more</a>
+    {{post.content | trim}}<a href="{{ url_for('views.view_post', id=post.id,slug=post.title) }}">more</a>
   </p>
   <br>
 
 
   <span>
-    <a class="btn btn-sm btn-primary" href="{{ url_for('views.view_post', id=post.id) }}">
+    <a class="btn btn-sm btn-primary" href="{{ url_for('views.view_post', id=post.id,slug=post.title) }}">
       view post
     </a>
   </span>
@@ -130,7 +130,7 @@
       <!--no of comments-->
 
 {% if post %}
-<a href="{{ url_for('views.view_post', id=post.id) }}">
+<a href="{{ url_for('views.view_post', id=post.id,slug=post.title) }}">
   <i class="fa-regular fa-comment" ></i> {{ post.comments | length  }}
   </a>
 
@@ -150,7 +150,6 @@
   <input  type="submit" value="upload ur pic"  />
   </form>
   <br><br><br><br>
-  
 <!-- Copyright -->
 {% if posts %}
 <footer class="bg-light text-center text-lg-start mt-5 border rounded-top">
