@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for,jsonify
 from flask_login import login_required, current_user
-from .models import Post,Comment,Category,Like
+from werkzeug.utils import secure_filename
+from .models import Post,Comment,Category,Like,Image
 from . import db
 
 views = Blueprint("views", __name__)
@@ -163,3 +164,24 @@ def like(post_id):
 @login_required
 def user_dashboard():
     return render_template("dashboard.html")
+
+
+@views.route("/pic", methods=['POST'])
+@login_required
+def picture ():
+    pic = request.files['image1']
+    if not pic:
+        flash('No file')
+        return redirect(url_for('views.home')),400
+    else:
+        filename = secure_filename(pic.filename)
+        if pic.filename =="":
+            flash('No selected file')
+            return redirect(url_for('views.home'))
+        else:    
+            type=pic.mimetype
+            img=Image(img=pic.read(),type=type,img_name=filename ,user_id=current_user.id)
+            db.session.add(img)
+            db.session.commit()
+        return redirect(url_for('views.home'))
+    
