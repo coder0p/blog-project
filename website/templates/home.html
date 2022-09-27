@@ -114,19 +114,33 @@
 
   <hr class="text-primary"/>
 
+
   <!-- Like view -->
 
   {% if current_user.is_authenticated %}
-  <div title="clap" class="p-2">
+  <div title="clap" class="p-2 position-relative">
     <span id="likes-count-{{post.id}}">
       {{ post.likes|length }}</span>
     {% if current_user.id in post.likes|map(attribute="user_id")|list %}
     <i class="fa-solid fa-hands-clapping fa-lg text-primary" id="like-button-{{post.id}}" onclick="like({{post.id}})"></i>
     {% else %}
     <i class="fa-solid fa-hands-clapping fa-lg" id="like-button-{{post.id}}" onclick="like({{post.id}})"></i>
+  
+    <div class="position-absolute top-50 start-50 translate-middle">
+      <!--no of comments-->
+
+{% if post %}
+<a href="{{ url_for('views.view_post', id=post.id) }}">
+  <i class="fa-regular fa-comment" ></i> {{ post.comments | length  }}
+  </a>
+
+{% endif %}
+    </div>
   </div>
   {% endif %}
   {% endif %}
+
+
 </div>
 {% endfor %}
 {% endif %}
