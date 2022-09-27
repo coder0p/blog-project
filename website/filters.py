@@ -1,4 +1,3 @@
-from time import timezone
 import timeago
 import datetime
 

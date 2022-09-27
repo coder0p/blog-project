@@ -1,4 +1,4 @@
-{% extends "base.html" %}{% block title %}homepage{% endblock %}
+{% extends "base.html" %}{% block title %}Home{% endblock %}
 
 {% block content%}
 
@@ -32,15 +32,10 @@
             aria-expanded="false">
             <i class="fas fa-user"></i>
           </a>
-          <ul class="dropdown-menu dropdown" aria-labelledby="navbarDropdown">
-            <li class="dropdown-content">
-              <p class="dropdown-item"> Hi.. {{ current_user.username }} !</p>
-            </li>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+            <li><a class="dropdown-item" href="{{ url_for('views.user_dashboard') }}">My profile</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Logout</a></li>
           </ul>
-        <li class="nav-item ms-3">
-          <a class="btn btn-black btn-rounded" href="{{ url_for('auth.logout') }}">Logout</a>
-        </li>
-
         {% else %}
         <li class="nav-item">
           <a class="nav-link mx-2" href="{{ url_for('auth.login') }}"><i class="fas fa-plus-circle pe-2"></i>Post</a>
@@ -126,7 +121,7 @@
     <span id="likes-count-{{post.id}}">
       {{ post.likes|length }}</span>
     {% if current_user.id in post.likes|map(attribute="user_id")|list %}
-    <i class="fa-solid fa-hands-clapping fa-lg" id="like-button-{{post.id}}" onclick="like({{post.id}})"></i>
+    <i class="fa-solid fa-hands-clapping fa-lg text-primary" id="like-button-{{post.id}}" onclick="like({{post.id}})"></i>
     {% else %}
     <i class="fa-solid fa-hands-clapping fa-lg" id="like-button-{{post.id}}" onclick="like({{post.id}})"></i>
   </div>

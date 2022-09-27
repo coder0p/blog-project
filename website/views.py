@@ -1,4 +1,3 @@
-from turtle import pos
 from flask import Blueprint, render_template, request, flash, redirect, url_for,jsonify
 from flask_login import login_required, current_user
 from .models import Post,Comment,Category,Like
@@ -143,7 +142,7 @@ def del_category(id):
 def like(post_id):
     post = Post.query.filter_by(id=post_id).first()
     like = Like.query.filter_by(user_id=current_user.id, post_id=post_id).first()
-    print(like)
+    
     
     if not post:
         return jsonify({'error': 'Post does not exist.'}, 400)
@@ -154,6 +153,13 @@ def like(post_id):
         like = Like(user_id=current_user.id, post_id=post_id)
         db.session.add(like)
         db.session.commit()
-        print(post.likes)
+        
 
     return jsonify({"likes": len(post.likes),"liked": current_user.id in map(lambda x: x.user_id, post.likes)})
+
+
+
+@views.route("/dashboard")
+@login_required
+def user_dashboard():
+    return render_template("dashboard.html")
