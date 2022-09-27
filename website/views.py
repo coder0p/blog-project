@@ -26,6 +26,7 @@ def create_post():
         cat = request.form.get('Category')
         title = request.form.get('title')
         content = request.form.get('content')
+        slug=slugify(title)
         if not cat :
             flash('Input items cannot be empty', category='error')
         elif not title:
@@ -35,12 +36,13 @@ def create_post():
         else:
             category = Category.query.filter_by(category = cat).first()
             if category:
-                post = Post(title =title,category = category ,content=content, user_id=current_user.id)
+                post = Post(title =title,category = category ,content=content, 
+                            category_id=category.id,user_id=current_user.id,slug=slug)
             else:
                 category = Category(category = cat,cat_user =current_user.id )
                 db.session.add(category)
                 db.session.commit()
-                post = Post(title =title,category = category, content=content, user_id=current_user.id)
+                post = Post(title =title,category = category, content=content, user_id=current_user.id,slug=slug)
             db.session.add(post)
             db.session.commit()
             flash('Post created!', category='success')
