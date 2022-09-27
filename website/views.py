@@ -48,6 +48,7 @@ def create_post():
 
 
 
+    
 @views.route("/delete/<int:id>/ ")
 @login_required
 def delete_post(id):
@@ -60,12 +61,21 @@ def delete_post(id):
     return redirect (url_for('views.home'))
 
 
-@views.route("/viewpost/<int:id>/", methods=['GET', 'POST'])
-def view_post(id):
-    post_view = Post.query.filter_by(id=id).all() 
-    comments_ = Comment.query.filter_by(post_id=id).order_by(Comment.date_created.desc()).all()
- 
-    return render_template("view_post.html",current_user=current_user, post_view=post_view,mycomment=comments_)
+@views.route("/viewpost/<int:id>/<slug>", methods=['GET', 'POST'])
+def view_post(id,slug):
+    if  slug:
+       # return redirect(url_for('views.views_post'))
+    #else:
+        
+        post_view = Post.query.filter_by(id=id).all() 
+        post = db.session.query(Post).filter_by(slug = slug).first()
+
+        comments_ = Comment.query.filter_by(post_id=id).order_by(Comment.date_created.desc()).all()
+    
+
+    return render_template("view_post.html",current_user=current_user,
+                               post_view=post_view,mycomment=comments_,post=post)
+
 
 
 @views.route("/comment/<int:id>", methods=['GET','POST'])
