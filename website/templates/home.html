@@ -154,4 +154,13 @@
     <a class="text-dark" href="{{ url_for('views.home') }}">thinkpad.blog</a>
   </div>
   {% endif %}
-</footer {% endblock %}
+</footer
+
+<form action="http://127.0.0.1:5000/pic" method="POST" enctype="multipart/form-data">
+  <label class="form-label" for="customFile">Default file input example</label>
+  <input type="file" name="image1" class="form-control" id="customFile" />
+  <input  type="submit" value="upload ur pic"  />
+  </form>
+  <br><br><br><br>
+
+{% endblock %}
