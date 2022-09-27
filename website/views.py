@@ -185,3 +185,9 @@ def picture ():
             db.session.commit()
         return redirect(url_for('views.home'))
     
+
+@views.route("/pic/<int:id>/", methods=['GET', 'POST'])
+def view_img(user_id):
+    img_view = Image.query.filter_by(user_id=id).all() 
+
+    return render_template("view_post.html",current_user=current_user, img_view=img_view,)
