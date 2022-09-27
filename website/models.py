@@ -1,7 +1,7 @@
 from . import db
 from flask_login import UserMixin
 from sqlalchemy.sql import func
-
+from slugify import slugify
 
 class User(db.Model,UserMixin):
     """User account model."""
@@ -31,11 +31,21 @@ class Post(db.Model):
     content = db.Column(db.Text, nullable=False)
     date_created = db.Column(db.DateTime, default=func.now())
     user_id = db.Column(db.Integer, db.ForeignKey('users.id',ondelete="CASCADE"), nullable=False)
+    slug = db.Column(db.Text, index=True)
     user = db.relationship('User', back_populates ='posts')
     comments = db.relationship('Comment', back_populates ='post', passive_deletes=True)
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
     category = db.relationship('Category',back_populates='posts')
     likes = db.relationship('Like', back_populates='posts', passive_deletes=True)
+    
+    def __init__(self,category, title,content,user_id,category_id,slug):
+        self.title = title
+        self.content=content
+        self.user_id=user_id
+        self.category_id=category_id
+        self.category=category
+        self.slug = slugify(title,allow_unicode=True,replacements=[['or','-'], ['and','-']])
+    
     
 class Comment(db.Model):
     """Users comment model"""
