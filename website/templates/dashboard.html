@@ -1,14 +1,137 @@
-{% extends "base.html" %} {% block title %}Create post{% endblock %}
+{% extends "base.html" %} {% block title %}Dashboard{% endblock %}
 
 {% block content %}
 
-<h1>This is user dashboard</h1>
-{% if img_view %}
-{% for image in img_view%}
-<div>
-    <img src="{{ url_for('views.user_dashboard',id=image.id) }}">
+<nav aria-label="breadcrumb" class="pb-4">
+    <ol class="breadcrumb fs-6">
+        <li class="breadcrumb-item"><a href="{{ url_for('views.home') }}">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+    </ol>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="card testimonial-card">
+                <div class="card-up" style="background-color: #9d789b;"></div>
+                <div class="avatar mx-auto bg-white">
+                    <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
+                        style="width: 150px;" alt="Avatar" />
+                </div>
+                <div class="card-body text-center">
+                    <h4 class="mb-4">{{user.username}}</h4>
+                    <hr />
+                    <button type="button" class="btn btn-dark btn-sm" data-mdb-toggle="modal"
+                        data-mdb-target="#exampleModal">Edit profile</button>
+                </div>
+            </div>
+
+            <!-- category -->
+            <div class="mt-4 text-center">
+                <div class="btn-group">
+                    <button class="btn btn-success btn-sm" type="button" onclick="categoryInput()" id="cat-btn">Add
+                        categories</button>
+                    <button type="button" class="btn btn-sm btn-danger dropdown-toggle dropdown-toggle-split"
+                        data-mdb-toggle="dropdown" aria-expanded="false">
+                        Delete categories
+                        <span class="visually-hidden">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        {% for cat in category %}
+                        <li>
+                            <a class="dropdown-item position-relative" href="#">
+                                {{cat.category}}
+                                {% if current_user.is_authenticated %}
+                                {% if cat.cat_user == current_user.id %}
+                                <form method="post" action="{{ url_for('views.del_category',id=cat.id) }}"
+                                    class="position-absolute top-50 start-100 translate-middle">
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        <i class="fa-regular fa-square-minus"></i>
+                                    </button>
+                                </form>
+                                {% endif %}
+                                {% endif %}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <!--Add  category  -->
+                <form name="category" method="POST" action="{{ url_for('views.add_category') }}" class="mt-2"
+                    id="category-form">
+                    <div class="mb-4 position-relative">
+                        <div class="form-outline">
+                            <input type="text" name="category" class="form-control" />
+                            <label class="form-label" for="form4Example2">category</label>
+                        </div>
+                        <button type="submit" value="button"
+                            class="btn btn-primary btn-sm  position-absolute top-50 start-50 translate-middle add-category-btn">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-sm-9  text-center">
+            <h4 class="border border-secondary rounded-pill text-dark">Your recent posts</h4>
+
+            <!-- Displaying created post in home page -->
+            {% if posts %}
+            {%for post in posts%}
+            <div class="container mt-4 shadow-4 position-relative">
+                <div class="position-relative">
+                    <span class="small position-absolute top-0 start-0">
+                        <i class="fas fa-user-circle"></i>
+                        posted by <strong>you</strong>
+                        <i>{{post.date_created|timesago}}</i></span>
+                    <span class="badge bg-dark position-absolute top-0 end-0 ">
+                        <i class="fa-solid fa-star star"></i>
+                        {{post.category.category}}</span>
+                </div>
+
+                <br>
+
+                <h2>{{post.title}}</h2>
+                <p>
+                    {{post.content | trim}}<a href="{{ url_for('views.view_post', id=post.id,slug=post.title) }}">more</a>
+                </p>
+                <br>
+
+
+                <span>
+                    <a class="btn btn-sm btn-primary position-absolute bottom-0 start-0"
+                        href="{{ url_for('views.view_post', id=post.id,slug=post.title) }}">
+                        view post
+                    </a>
+                </span>
+            </div>
+            {% endfor %}
+            {% else %}
+            <h3 class="text-center">Sorry there are no posts</h3>
+            {% endif %}
+        </div>
+    </div>
 </div>
-{%endfor%}
-{% endif %}
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Upload image</h5>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <label class="form-label" for="customFile">.JPG or .PNG no larger than 5 MB</label>
+                <input type="file" class="form-control" id="customFile" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

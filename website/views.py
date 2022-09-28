@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request,Response, flash, redirect, url_for,jsonify
 from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
-from .models import Post,Comment,Category,Like,Image
+from .models import User,Post,Comment,Category,Like,Image
 from . import db
 from slugify import slugify
 
@@ -193,10 +193,14 @@ def like(post_id):
 
 
 
-@views.route("/dashboard")
+@views.route("/dashboard/<int:id>")
 @login_required
-def user_dashboard():
-    return render_template("dashboard.html")
+def user_dashboard(id):
+    user = User.query.filter_by(id = id).first()
+    posts = Post.query.filter_by(user_id = id).order_by((Post.date_created.desc())).all()
+    category = Category.query.filter_by(cat_user = id)
+    return render_template("dashboard.html",user = user,category=category ,posts = posts)
+
 
 
 @views.route("/pic", methods=['POST'])
