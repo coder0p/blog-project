@@ -3,5 +3,12 @@
 {% block content %}
 
 <h1>This is user dashboard</h1>
+{% if img_view %}
+{% for image in img_view%}
+<div>
+    <img src="{{ url_for('views.user_dashboard',id=image.id) }}">
+</div>
+{%endfor%}
+{% endif %}
 
 {% endblock %}

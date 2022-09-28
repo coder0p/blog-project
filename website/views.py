@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for,jsonify
+from flask import Blueprint, render_template, request,Response, flash, redirect, url_for,jsonify
 from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
 from .models import Post,Comment,Category,Like,Image
@@ -218,8 +218,15 @@ def picture ():
         return redirect(url_for('views.home'))
     
 
-@views.route("/pic/<int:id>/", methods=['GET', 'POST'])
-def view_img(user_id):
-    img_view = Image.query.filter_by(user_id=id).all() 
-
-    return render_template("view_post.html",current_user=current_user, img_view=img_view,)
+@views.route("pic/<int:id>/", methods=['GET', 'POST'])
+def view_img(id):
+    img_view = Image.query.filter_by(id=id).first() 
+    if not img_view:
+        flash ('image not found',category='error')
+        return redirect(url_for('views.home'))
+    else:
+        if img_view.type ==" ":
+            flash('its not a image')
+        else:
+            return Response(img_view.img,mimetype=img_view.type)
+    return render_template("dashboard.html",current_user=current_user, img_view=img_view)
