@@ -1,7 +1,7 @@
-from flask import Blueprint, render_template, redirect, url_for, request, flash
+from flask import Blueprint, render_template, redirect, url_for, request, flash,session
 from . import db
 from .models import User
-from flask_login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user, login_required,current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
 auth = Blueprint("auth", __name__)
@@ -71,3 +71,31 @@ def logout():
     logout_user()
     flash('logout successfully..',category='success')
     return redirect(url_for("views.home"))
+
+@auth.route("/edit/", methods=['GET', 'POST'])
+def update():
+    if request.method == 'POST':
+        email = request.form.get("email")
+        password = request.form.get("password")
+        new_email = request.form.get("email_")
+
+        user = User.query.filter_by(email=email).first()
+        
+        old_name=current_user.username
+        old_id=current_user.id
+        old_pass=current_user.password
+        new_user=User(id=old_id,email=new_email,username=old_name,password=old_pass)
+
+        if user:
+            if check_password_hash(user.password, password):
+                flash("Email updated successfully..", category='success')
+                db.session.merge(new_user)
+                db.session.commit()
+                login_user(new_user, remember=True)
+                return redirect(url_for('views.user_dashboard',id=current_user.id))
+            else:
+                flash('Password is incorrect.', category='error')
+        else:
+            flash('Email does not exist.', category='error')
+
+    return render_template("update.html")
