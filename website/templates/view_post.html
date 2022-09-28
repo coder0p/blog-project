@@ -69,7 +69,7 @@
 
 <div class="container mt-4 shadow-4">
   {% if current_user.is_authenticated %}
-  <form action="{{ url_for('views.comments',id=post.id) }}" method="post" role="form">
+  <form action="{{ url_for('views.comments',id=post.id,slug=post.slug) }}" method="post" role="form">
     <div class="card-footer py-3 border-0" style="background-color: #f8f9fa;">
       <div class="d-flex flex-start w-100">
         <img class="rounded-circle shadow-1-strong me-3"

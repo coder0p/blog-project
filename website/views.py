@@ -99,24 +99,25 @@ def delete_post(id):
 #     return render_template("view_post.html",current_user=current_user, post_view=post_view,mycomment=comments_)
 
 
-@views.route("/comment/<int:id>", methods=['GET','POST'])
-def comments(id):
+@views.route("/comment/<int:id>/<slug>", methods=['GET','POST'])
+def comments(id,slug):
     post_view = Post.query.filter_by(id=id).all()
+    slug_= slugify(slug,allow_unicode=True)
+   # slug_=slugify(slugs_.title,allow_unicode=True)
     if request.method == "POST":
         guestname = request.form.get('name')
         comment = request.form.get('comment')
-        
         if current_user.is_authenticated:
             if not comment:
                 flash('comment section cannot be empty', category='error')
-                return redirect(url_for('views.view_post',id=id))
+                return redirect(url_for('views.view_post',id=id,slug=slug_))
         else:
             if not guestname :
                 flash('name section cannot be empty', category='error')
-                return redirect(url_for('views.view_post',id=id))
+                return redirect(url_for('views.view_post',id=id,slug=slug_))
             if not comment:
                 flash('comment section cannot be empty', category='error')
-                return redirect(url_for('views.view_post',id=id))
+                return redirect(url_for('views.view_post',id=id,slug=slug_))
             
         if current_user.is_authenticated:
             post = Comment(guestname =current_user.username, Comment=comment, post_id=id)                
@@ -125,7 +126,7 @@ def comments(id):
         db.session.add(post)
         db.session.commit()
         flash(f'{post.guestname} commented!', category='success')
-        return redirect(url_for('views.view_post',id=id))
+        return redirect(url_for('views.view_post',id=id,slug=slug_))
         
     return render_template('view_post.html',post_view=post_view)
 
