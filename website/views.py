@@ -235,3 +235,10 @@ def view_img(id):
         else:
             return Response(img_view.img,mimetype=img_view.type)
     return render_template("dashboard.html",current_user=current_user, img_view=img_view)
+
+
+@views.route("/<category>/<int:id>/")
+def category_post(id,category):
+    posts = Post.query.filter_by(category_id  = id).order_by((Post.date_created.desc())).all()
+    category = Category.query.all()
+    return render_template("home.html",current_user=current_user, posts=posts,category=category)

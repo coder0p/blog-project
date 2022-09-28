@@ -60,7 +60,7 @@
   <ul class="dropdown-menu">
     {% for cat in category %}
     <li>
-      <a class="dropdown-item position-relative" href="#">
+      <a class="dropdown-item position-relative" href="{{ url_for('views.category_post', id=cat.id,category=cat.category)}}">
         {{cat.category}}
         {% if current_user.is_authenticated %}
         {% if cat.cat_user == current_user.id %}
