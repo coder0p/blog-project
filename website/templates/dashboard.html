@@ -31,13 +31,15 @@
                 <div class="btn-group">
                     <button class="btn btn-success btn-sm" type="button" onclick="categoryInput()" id="cat-btn">Add
                         categories</button>
+
+                    {% for cat in category %}
+                    {% if cat %}
                     <button type="button" class="btn btn-sm btn-danger dropdown-toggle dropdown-toggle-split"
                         data-mdb-toggle="dropdown" aria-expanded="false">
                         Delete categories
                         <span class="visually-hidden">Toggle Dropdown</span>
                     </button>
                     <ul class="dropdown-menu">
-                        {% for cat in category %}
                         <li>
                             <a class="dropdown-item position-relative" href="#">
                                 {{cat.category}}
@@ -53,8 +55,9 @@
                                 {% endif %}
                             </a>
                         </li>
-                        {% endfor %}
                     </ul>
+                    {% endif %}
+                    {% endfor %}
                 </div>
 
                 <!--Add  category  -->
@@ -85,16 +88,20 @@
                         <i class="fas fa-user-circle"></i>
                         posted by <strong>you</strong>
                         <i>{{post.date_created|timesago}}</i></span>
+
+                        {% if post.category.category %}
                     <span class="badge bg-dark position-absolute top-0 end-0 ">
                         <i class="fa-solid fa-star star"></i>
                         {{post.category.category}}</span>
+                        {% endif %}
                 </div>
 
                 <br>
 
                 <h2>{{post.title}}</h2>
                 <p>
-                    {{post.content | trim}}<a href="{{ url_for('views.view_post', id=post.id,slug=post.title) }}">more</a>
+                    {{post.content | trim}}<a
+                        href="{{ url_for('views.view_post', id=post.id,slug=post.title) }}">more</a>
                 </p>
                 <br>
 
@@ -109,7 +116,7 @@
                 {% if current_user.is_authenticated %}
                 {% if current_user.id == post.user_id%}
                 <a class="btn btn-danger btn-sm position-absolute bottom-0 end-0"
-                  href="{{ url_for('views.delete_post', id=post.id) }}">delete post</a>
+                    href="{{ url_for('views.delete_post', id=post.id) }}">delete post</a>
                 {% endif %}
                 {% endif %}
             </div>

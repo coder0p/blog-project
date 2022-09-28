@@ -87,9 +87,12 @@
       <i class="fas fa-user-circle"></i>
       posted by <strong>{{post.user.username}}</strong>
       <i>{{post.date_created|timesago}}</i></span>
+      
+      {% if post.category.category %}
     <span class="badge bg-dark position-absolute top-0 end-0 ">
       <i class="fa-solid fa-star star"></i>
       {{post.category.category}}</span>
+      {% endif %}
   </div>
 
   <br>

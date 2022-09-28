@@ -98,7 +98,7 @@ def delete_post(id):
         db.session.delete(post)
         db.session.commit()
         flash("post deleted",category='success')
-        return redirect (url_for('views.user_dashboard',id = post.id))
+        return redirect (url_for('views.user_dashboard',id = id))
 
 
 
