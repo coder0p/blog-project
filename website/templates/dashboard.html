@@ -105,10 +105,17 @@
                         view post
                     </a>
                 </span>
+
+                {% if current_user.is_authenticated %}
+                {% if current_user.id == post.user_id%}
+                <a class="btn btn-danger btn-sm position-absolute bottom-0 end-0"
+                  href="{{ url_for('views.delete_post', id=post.id) }}">delete post</a>
+                {% endif %}
+                {% endif %}
             </div>
             {% endfor %}
             {% else %}
-            <h3 class="text-center">Sorry there are no posts</h3>
+            <h4 class="text-center pt-2"><em>Sorry! there are no posts...</em></h4>
             {% endif %}
         </div>
     </div>

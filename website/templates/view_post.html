@@ -20,13 +20,7 @@
     {{post.content}}
   </em>
   
-  {% if current_user.is_authenticated %}
-  {% if current_user.id == post.user_id%}
-  <a class="btn btn-danger btn-sm position-absolute bottom-0 end-0"
-    href="{{ url_for('views.delete_post', id=post.id) }}">delete post</a>
-  {% endif %}
-  {% endif %}
-
+  
   <span class="small position-absolute top-0 end-0 badge bg-dark ">
     author: 
     <i class="fas fa-user-circle ms-2"></i>
@@ -66,7 +60,6 @@
 <!-- Create Comment -->
 
   <!-- Registered user comment -->
-
 <div class="container mt-4 shadow-4">
   {% if current_user.is_authenticated %}
   {%if post%}
