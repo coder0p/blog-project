@@ -65,11 +65,7 @@
   <ul class="dropdown-menu">
     {% for cat in category %}
     <li>
-<<<<<<< HEAD
-      <a class="dropdown-item position-relative" href="{{ url_for('views.category_post', id=cat.id,category=cat.category)}}">
-=======
       <a class="dropdown-item position-relative" href="{{ url_for('views.category_post', id=cat.id, category=cat.category)}}">
->>>>>>> aldrin-feature-category
         {{cat.category}}
       </a>
     </li>
