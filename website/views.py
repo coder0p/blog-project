@@ -251,7 +251,7 @@ def picture ():
 @views.route("pic/<int:user_id>", methods=['GET', 'POST'])
 def view_img(user_id):
     img_view = Image.query.filter_by(user_id=user_id).order_by((Image.date_created.desc())).first() 
-    print(img_view.id)
+   
     if not img_view:
         flash ('image not found',category='error')
         return redirect(url_for('views.home'))

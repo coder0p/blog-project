@@ -101,3 +101,31 @@ def update():
     return render_template("update.html")
 
 
+@auth.route("/username/", methods=['GET', 'POST'])
+@login_required
+def update_uname():
+    if request.method == 'POST':
+        email = request.form.get("email")
+        password = request.form.get("password")
+       
+        new_uname = request.form.get("username")
+        user = User.query.filter_by(email=email).first()
+
+        
+        old_id=current_user.id
+        old_pass=current_user.password
+        new_user=User(id=old_id,email=email,username=new_uname,password=old_pass)
+
+        if user:
+            if check_password_hash(user.password, password):
+                flash("username updated successfully..", category='success')
+                db.session.merge(new_user)
+                db.session.commit()
+                login_user(new_user, remember=True)
+                return redirect(url_for('views.user_dashboard',id=current_user.id))
+            else:
+                flash('Password is incorrect.', category='error')
+        else:
+            flash('Email does not exist.', category='error')
+
+    return render_template("edit_uname.html")
