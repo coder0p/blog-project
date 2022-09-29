@@ -99,3 +99,5 @@ def update():
             flash('Email does not exist.', category='error')
 
     return render_template("update.html")
+
+
