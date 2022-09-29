@@ -32,11 +32,11 @@ def create_post():
         content = request.form.get('content')
         slug=slugify(title)
         if not cat :
-            flash('Input items cannot be empty', category='error')
+            flash('category cannot be empty', category='error')
         elif not title:
-            flash('Input items cannot be empty', category='error')
+            flash('title cannot be empty', category='error')
         elif not content:
-            flash('Input items cannot be empty', category='error')
+            flash('content cannot be empty', category='error')
         else:
             category = Category.query.filter_by(category = cat).first()
             if category:
