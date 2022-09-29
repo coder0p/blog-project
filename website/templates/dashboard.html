@@ -16,8 +16,13 @@
             <div class="card testimonial-card">
                 <div class="card-up" style="background-color: #9d789b;"></div>
                 <div class="avatar mx-auto bg-white">
+                    {% if img_view %}
                     <img src="{{url_for('views.view_img',user_id=current_user.id,id=img_view.id)}}"
                         class="rounded-circle" style="width: 150px; height: 150px; object-fit: cover" alt="Avatar" />
+                       {% else %}
+                       <img src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" class="rounded-circle"
+                       style="width: 150px;" alt="Avatar" />
+                       {% endif %}
                 </div>
                 <div class="card-body text-center">
                     <h4 class="mb-4">{{user.username}}</h4>

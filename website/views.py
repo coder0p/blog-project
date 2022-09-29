@@ -218,7 +218,7 @@ def like(post_id):
 @views.route("/dashboard/<int:id>")
 @login_required
 def user_dashboard(id):
-    img_view = Image.query.filter_by(id=id).first() 
+    img_view = Image.query.filter_by(user_id=id).first() 
     user = User.query.filter_by(id = id).first()
     posts = Post.query.filter_by(user_id = id).order_by((Post.date_created.desc())).all()
     category = Category.query.filter_by(cat_user = id)
