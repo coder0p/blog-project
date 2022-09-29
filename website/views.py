@@ -142,8 +142,8 @@ def comments(id,slug):
 def add_category():
     if request.method == "POST":
         cat = request.form.get('category')
-        if not cat :
-            flash('Input items cannot be empty', category='error')
+        if cat == "":
+            flash('category items cannot be empty', category='error')
         else:
             category_exist = Category.query.filter_by(category = cat).first()
             if category_exist:
@@ -231,10 +231,10 @@ def user_dashboard(id):
 @views.route("/pic", methods=['POST'])
 @login_required
 def picture ():
-    pic = request.files['image1']
+    pic = request.files['image']
     if not pic:
-        flash('No file')
-        return redirect(url_for('views.home')),400
+        flash('please browse any file', category='error')
+        return redirect(url_for('views.user_dashboard',id=current_user.id))
     else:
         filename = secure_filename(pic.filename)
         if pic.filename =="":
@@ -248,8 +248,8 @@ def picture ():
         return redirect(url_for('views.user_dashboard',id=current_user.id))
     
 
-@views.route("pic/<int:user_id>/<int:id>", methods=['GET', 'POST'])
-def view_img(user_id,id):
+@views.route("pic/<int:user_id>", methods=['GET', 'POST'])
+def view_img(user_id):
     img_view = Image.query.filter_by(user_id=user_id).order_by((Image.date_created.desc())).first() 
     print(img_view.id)
     if not img_view:

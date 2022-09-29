@@ -21,7 +21,7 @@
     <div class="mb-4 =">
       <div class="select-div">
         <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="Category">
-          <option selected>Select category</option>
+          <option selected disabled>Select category</option>
           {% for category in categories%}
           <option value="{{category.category}}">{{category.category}}</option>
           {% endfor %}

@@ -17,7 +17,7 @@
                 <div class="card-up" style="background-color: #9d789b;"></div>
                 <div class="avatar mx-auto bg-white">
                     <img src="{{url_for('views.view_img',user_id=current_user.id,id=img_view.id)}}" class="rounded-circle"
-                    style="width: 150px;" alt="Avatar" />
+                    style="width: 150px; height: 150px;" alt="Avatar" />
                 </div>
                 <div class="card-body text-center">
                     <h4 class="mb-4">{{user.username}}</h4>
@@ -141,9 +141,9 @@
             </div>
             <div class="modal-body">
                 <form action="{{ url_for('views.picture')}}" class="mt-2" method="POST" enctype="multipart/form-data">
-                    <label class="form-label" for="customFile">Default file input example</label>
-                    <input type="file" name="image1" class="form-control" id="customFile" />
-                    <input  type="submit" value="upload ur pic"/>
+                    <label class="form-label" for="customFile">click here to browse</label>
+                    <input type="file" name="image" class="form-control" id="customFile" />
+                    <input  type="submit" class="btn btn-success mt-2" value="upload"/>
                   </form>
             </div>
             <div class="modal-footer">
