@@ -9,6 +9,8 @@ from slugify import slugify
 views = Blueprint("views", __name__)
 
 
+#Home route
+
 @views.route("/")
 @views.route("/home")
 def home():
@@ -18,6 +20,8 @@ def home():
 
 
 
+
+# Post creation route
 
 @views.route("/post", methods=['GET', 'POST'])
 @login_required
@@ -42,7 +46,8 @@ def create_post():
                 category = Category(category = cat,cat_user =current_user.id )
                 db.session.add(category)
                 db.session.commit()
-                post = Post(title =title,category = category, content=content, user_id=current_user.id,slug=slug)
+                post = Post(title =title,category = category, content=content, 
+                user_id=current_user.id,slug=slug)
             db.session.add(post)
             db.session.commit()
             flash('Post created!', category='success')
@@ -51,6 +56,8 @@ def create_post():
     return render_template('posts.html', categories = category)
 
 
+
+# Post view route with slug url of title
 
 @views.route("/viewpost/<int:id>/<slug>", methods=['GET', 'POST'])
 def view_post(id,slug):
@@ -69,42 +76,38 @@ def view_post(id,slug):
                                post_view=post_view,mycomment=comments_,post=post)
 
 
+# post view without slug url 
+
 @views.route("/viewpost/<int:id>/", methods=['GET', 'POST'])
 def views_post(id):
     post_view = Post.query.filter_by(id=id).all() 
-    #post = db.session.query(Post).filter_by(slug = slug).first()
     comments_ = Comment.query.filter_by(post_id=id).order_by(Comment.date_created.desc()).all()
-
     return render_template("view_post.html",current_user=current_user,
                                post_view=post_view,mycomment=comments_)
 
 
-   
+
+# post deletion route
+
 @views.route("/delete/<int:id>/ ")
 @login_required
 def delete_post(id):
-    post_to_delete = Post.query.filter_by(id=id).first_or_404()
+    post = Post.query.filter_by(id=id).first_or_404()
     id = current_user.id
-    if id == post_to_delete.user_id:
-        db.session.delete(post_to_delete)
+    if id == post.user_id:
+        db.session.delete(post)
         db.session.commit()
         flash("post deleted",category='success')
-    return redirect (url_for('views.home'))
+        return redirect (url_for('views.user_dashboard',id = id))
 
 
-# @views.route("/viewpost/<int:id>/", methods=['GET', 'POST'])
-# def view_post(id):
-#     post_view = Post.query.filter_by(id=id).all() 
-#     comments_ = Comment.query.filter_by(post_id=id).order_by(Comment.date_created.desc()).all()
- 
-#     return render_template("view_post.html",current_user=current_user, post_view=post_view,mycomment=comments_)
 
+#comments 
 
 @views.route("/comment/<int:id>/<slug>", methods=['GET','POST'])
 def comments(id,slug):
     post_view = Post.query.filter_by(id=id).all()
     slug_= slugify(slug,allow_unicode=True)
-   # slug_=slugify(slugs_.title,allow_unicode=True)
     if request.method == "POST":
         guestname = request.form.get('name')
         comment = request.form.get('comment')
@@ -132,6 +135,8 @@ def comments(id,slug):
     return render_template('view_post.html',post_view=post_view)
 
 
+# creating category
+
 @views.route("/category", methods=['GET','POST'])
 @login_required
 def add_category():
@@ -148,10 +153,13 @@ def add_category():
         db.session.add(category)    
         db.session.commit()
         flash("category added..")
-        return redirect(url_for('views.create_post'))
+        return redirect(url_for('views.user_dashboard',id = current_user.id))
     return render_template('posts.html')
 
     
+
+
+#category deletion 
 
 @views.route("/category_del/<int:id>/", methods=['GET','POST'])
 @login_required
@@ -167,17 +175,30 @@ def del_category(id):
                 flash("category deleted...")
             else:
                 flash('not worked', category='error')
-            return redirect(url_for('views.home'))
+            return redirect(url_for('views.user_dashboard', id = current_user.id))
     return render_template('home.html')
 
+
+
+#category sorting in home page 
+
+@views.route("/<category>/<int:id>/")
+def category_post(id,category):
+    posts = Post.query.filter_by(category_id  = id).order_by((Post.date_created.desc())).all()
+    category = Category.query.all()
+    return render_template("home.html",current_user=current_user, posts=posts,category=category)
+
+
+
+
+#Likes implementation 
 
 @views.route("/likepost/<post_id>", methods=['POST'])
 @login_required
 def like(post_id):
     post = Post.query.filter_by(id=post_id).first()
     like = Like.query.filter_by(user_id=current_user.id, post_id=post_id).first()
-    
-    
+     
     if not post:
         return jsonify({'error': 'Post does not exist.'}, 400)
     elif like:
@@ -187,11 +208,12 @@ def like(post_id):
         like = Like(user_id=current_user.id, post_id=post_id)
         db.session.add(like)
         db.session.commit()
-        
+    
+    return jsonify({"likes": len(post.likes),
+    "liked": current_user.id in map(lambda x: x.user_id, post.likes)})
 
-    return jsonify({"likes": len(post.likes),"liked": current_user.id in map(lambda x: x.user_id, post.likes)})
 
-
+#user dashboard 
 
 @views.route("/dashboard/<int:id>")
 @login_required
@@ -200,6 +222,8 @@ def user_dashboard(id):
     posts = Post.query.filter_by(user_id = id).order_by((Post.date_created.desc())).all()
     category = Category.query.filter_by(cat_user = id)
     return render_template("dashboard.html",user = user,category=category ,posts = posts)
+
+
 
 
 
@@ -237,8 +261,3 @@ def view_img(id):
     return render_template("dashboard.html",current_user=current_user, img_view=img_view)
 
 
-@views.route("/<category>/<int:id>/")
-def category_post(id,category):
-    posts = Post.query.filter_by(category_id  = id).order_by((Post.date_created.desc())).all()
-    category = Category.query.all()
-    return render_template("home.html",current_user=current_user, posts=posts,category=category)

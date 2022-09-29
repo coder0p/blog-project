@@ -6,30 +6,7 @@
 
   <h1 class="text-center pt-2">Create Post</h1>
 
-
-   <!-- category -->
- 
-   <div class="btn-group">
-    <button class="btn btn-dark btn-sm" type="button" onclick="categoryInput()" id="cat-btn">Add your
-      categories</button>
-  </div>
-
-
-  <!--Add  category  -->
-  <form name="category" method="POST" action="{{ url_for('views.add_category') }}" class="mt-2" id="category-form">
-    <div class="mb-4 position-relative">
-      <div class="form-outline w-25">
-        <input type="text" name="category" class="form-control" />
-        <label class="form-label" for="form4Example2">category</label>
-      </div>
-      <button type="submit" value="button"
-        class="btn btn-primary btn-sm  position-absolute top-50 start-50 translate-middle add-category-btn">
-        <i class="fa-solid fa-plus"></i>
-      </button>
-    </div>
-  </form>
-
-
+  
   <!-- Post creation form -->
 
   <form method="post" name="form" class="pt-4">
