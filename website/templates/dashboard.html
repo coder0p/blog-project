@@ -10,13 +10,14 @@
 </nav>
 
 <div class="container">
+    
     <div class="row">
         <div class="col-sm-3">
             <div class="card testimonial-card">
                 <div class="card-up" style="background-color: #9d789b;"></div>
                 <div class="avatar mx-auto bg-white">
-                    <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
-                        style="width: 150px;" alt="Avatar" />
+                    <img src="{{url_for('views.view_img',user_id=current_user.id,id=img_view.id)}}" class="rounded-circle"
+                    style="width: 150px;" alt="Avatar" />
                 </div>
                 <div class="card-body text-center">
                     <h4 class="mb-4">{{user.username}}</h4>
@@ -24,6 +25,7 @@
                     <button type="button" class="btn btn-dark btn-sm" data-mdb-toggle="modal"
                         data-mdb-target="#exampleModal">Edit profile</button>
                 </div>
+                
             </div>
 
             <!-- category -->
@@ -138,8 +140,11 @@
                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <label class="form-label" for="customFile">.JPG or .PNG no larger than 5 MB</label>
-                <input type="file" class="form-control" id="customFile" />
+                <form action="{{ url_for('views.picture')}}" class="mt-2" method="POST" enctype="multipart/form-data">
+                    <label class="form-label" for="customFile">Default file input example</label>
+                    <input type="file" name="image1" class="form-control" id="customFile" />
+                    <input  type="submit" value="upload ur pic"/>
+                  </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>

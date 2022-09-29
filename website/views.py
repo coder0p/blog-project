@@ -218,10 +218,11 @@ def like(post_id):
 @views.route("/dashboard/<int:id>")
 @login_required
 def user_dashboard(id):
+    img_view = Image.query.filter_by(id=id).first() 
     user = User.query.filter_by(id = id).first()
     posts = Post.query.filter_by(user_id = id).order_by((Post.date_created.desc())).all()
     category = Category.query.filter_by(cat_user = id)
-    return render_template("dashboard.html",user = user,category=category ,posts = posts)
+    return render_template("dashboard.html",user = user,category=category ,posts = posts,img_view =img_view)
 
 
 
@@ -237,27 +238,28 @@ def picture ():
     else:
         filename = secure_filename(pic.filename)
         if pic.filename =="":
-            flash('No selected file')
+            flash('No selected file',category='error')
             return redirect(url_for('views.home'))
         else:    
             type=pic.mimetype
             img=Image(img=pic.read(),type=type,img_name=filename ,user_id=current_user.id)
             db.session.add(img)
             db.session.commit()
-        return redirect(url_for('views.home'))
+        return redirect(url_for('views.user_dashboard',id=current_user.id))
     
 
-@views.route("pic/<int:id>/", methods=['GET', 'POST'])
-def view_img(id):
-    img_view = Image.query.filter_by(id=id).first() 
+@views.route("pic/<int:user_id>/<int:id>", methods=['GET', 'POST'])
+def view_img(user_id,id):
+    img_view = Image.query.filter_by(user_id=user_id).order_by((Image.date_created.desc())).first() 
+    print(img_view.id)
     if not img_view:
         flash ('image not found',category='error')
         return redirect(url_for('views.home'))
     else:
-        if img_view.type ==" ":
-            flash('its not a image')
+        if img_view.type =="": 
+            flash('its not a image',category='error')
         else:
             return Response(img_view.img,mimetype=img_view.type)
-    return render_template("dashboard.html",current_user=current_user, img_view=img_view)
+    return render_template("dashboard.html",current_user=current_user.id, img_view=img_view)
 
 
