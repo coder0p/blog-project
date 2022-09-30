@@ -72,12 +72,12 @@ def logout():
     flash('logout successfully..',category='success')
     return redirect(url_for("views.home"))
 
-@auth.route("/edit/", methods=['GET', 'POST'])
-def update():
+@auth.route("/email", methods=['POST',])
+def update_email():
     if request.method == 'POST':
         email = request.form.get("email")
         password = request.form.get("password")
-        new_email = request.form.get("new-email")
+        new_email = request.form.get("email_")
 
         user = User.query.filter_by(email=email).first()
         
@@ -95,28 +95,27 @@ def update():
                 return redirect(url_for('views.user_dashboard',id=current_user.id))
             else:
                 flash('Password is incorrect.', category='error')
-                return redirect(url_for('views.user_dashboard',id=current_user.id))
-
         else:
             flash('Email does not exist.', category='error')
-            return redirect(url_for('views.user_dashboard',id=current_user.id))
+
+    return redirect(url_for('views.user_dashboard',id=current_user.id))
 
 
 
-@auth.route("/username/", methods=['GET', 'POST'])
+@auth.route("/username", methods=['POST',])
 @login_required
-def update_uname():
+def update_username():
     if request.method == 'POST':
         email = request.form.get("email")
         password = request.form.get("password")
        
-        new_uname = request.form.get("username")
+        new_username = request.form.get("new-username")
         user = User.query.filter_by(email=email).first()
 
         
         old_id=current_user.id
         old_pass=current_user.password
-        new_user=User(id=old_id,email=email,username=new_uname,password=old_pass)
+        new_user=User(id=old_id,email=email,username=new_username,password=old_pass)
 
         if user:
             if check_password_hash(user.password, password):
@@ -130,4 +129,45 @@ def update_uname():
         else:
             flash('Email does not exist.', category='error')
 
-    return render_template("edit_uname.html")
+    return redirect(url_for('views.user_dashboard',id=current_user.id))
+
+
+
+@auth.route("/password", methods=['POST',])
+@login_required
+def update_password():
+    if request.method == 'POST':
+        email = request.form.get("email")
+        password = request.form.get("password")
+        new_password = request.form.get("new-password")
+        confirm_password = request.form.get("repeat_password")
+
+        user = User.query.filter_by(email=email).first()
+
+        old_id=current_user.id
+        old_name=current_user.username
+        old_email=current_user.email
+        old_password=current_user.password
+        
+        
+        new_user=User(id=old_id,email=old_email,username=old_name,
+                password=generate_password_hash(
+                new_password, method='sha256'))
+        
+        if user:
+            if new_password != confirm_password:
+                flash('Password don\'t match!', category='error')
+            elif len(new_password) <= 6:
+                flash('Password is too short!', category='error')
+
+            elif check_password_hash(user.password, password):
+                flash("password updated successfully..", category='success')
+                db.session.merge( new_user )
+                db.session.commit()
+                login_user( new_user, remember=True)
+                return redirect(url_for('views.user_dashboard',id=current_user.id))
+            else:
+                flash('Password is incorrect.', category='error')
+        else:
+            flash('Email does not exist.', category='error')
+    return redirect(url_for('views.user_dashboard',id=current_user.id))

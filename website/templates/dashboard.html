@@ -36,11 +36,13 @@
                         data-mdb-toggle="dropdown" aria-expanded="false">
                         update profile
                     </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <ul class="dropdown-menu text-center" aria-labelledby="dropdownMenuButton">
                         <li><a class="dropdown-item" href="#" data-mdb-toggle="modal"
-                                data-mdb-target="#emailModal">email</a></li>
-                        <li><a class="dropdown-item" href="#">username</a></li>
-                        <li><a class="dropdown-item" href="#">password</a></li>
+                                data-mdb-target="#emailModal">update email</a></li>
+                        <li><a class="dropdown-item" href="#" data-mdb-toggle="modal"
+                            data-mdb-target="#usernameModal">update username</a></li>
+                        <li><a class="dropdown-item" href="#" data-mdb-toggle="modal"
+                            data-mdb-target="#passwordModal">update password</a></li>
                     </ul>
                 </div>
 
@@ -184,7 +186,7 @@
                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="post" name="email-updation" action="{{ url_for('auth.update') }}">
+                <form method="post" name="email-updation" action="{{ url_for('auth.update_email') }}">
                     <div class="mb-3">
                         <label for="email" class="col-form-label">Current email</label>
                         <input type="email" class="form-control" id="email" name="email" autocomplete="off">
@@ -208,44 +210,81 @@
 </div>
 
 
-<!-- username edit-->
-<div>
-    <span>
-        <a class="btn btn-sm btn-primary" left='10' href="{{ url_for('auth.update_uname') }}">
-            Edit username
-        </a>
-    </span>
+<!-- username modal -->
+
+<div class="modal fade" id="usernameModal" tabindex="-1" aria-labelledby="usernameModalLabel" data-mdb-backdrop="static"
+    data-mdb-keyboard="false" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="emailModalLabel">Update username</h5>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" name="email-updation" action="{{ url_for('auth.update_username') }}">
+                    <div class="mb-3">
+                        <label for="email" class="col-form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" autocomplete="off">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="col-form-label">Password</label>
+                        <input type="password" class="form-control" id="password" name="password"></input>
+                    </div>
+                    <div class="mb-3 pt-4">
+                        <label for="new-username" class="col-form-label">Enter new username</label>
+                        <input type="text" class="form-control" id="new-username" name="new-username"></input>
+                    </div>
+                    <button type="submit" class="btn btn-success ">update</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+<!-- password modal -->
+
+<div class="modal fade" id="passwordModal" tabindex="-1" aria-labelledby="passwordModalLabel" data-mdb-backdrop="static"
+    data-mdb-keyboard="false" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="passwordModalLabel">Update password</h5>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" name="email-updation" action="{{ url_for('auth.update_password') }}">
+                    <div class="mb-3">
+                        <label for="email" class="col-form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" autocomplete="off">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="col-form-label">Password</label>
+                        <input type="password" class="form-control" id="password" name="password"></input>
+                    </div>
+                    <div class="mb-3 pt-4">
+                        <label for="new-password" class="col-form-label">Enter new password</label>
+                        <input type="password" class="form-control" id="new-username" name="new-password"></input>
+                    </div>
+                    <div class="mb-3">
+                        <label for="repeat_password" class="col-form-label">Password</label>
+                        <input type="password" class="form-control" id="repeat_password" name="repeat_password"></input>
+                    </div>
+                    <button type="submit" class="btn btn-success ">update</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 
 {% endblock %}
-
-
-
-
-<!-- email edit-->
-<div>
-    <span>
-        <a class="btn btn-sm btn-primary position-absolute bottom-0 start-0" left='10'
-            href="{{ url_for('auth.update') }}">
-            Edit email
-        </a>
-    </span>
-</div>
-<br><br>
-<!-- username edit-->
-<div>
-    <span>
-        <a class="btn btn-sm btn-primary" left='10' href="{{ url_for('auth.update_uname') }}">
-            Edit username
-        </a>
-    </span>
-</div>
-<!-- password edit-->
-<div>
-    <span>
-        <a class="btn btn-sm btn-primary" left='10' href="{{ url_for('auth.update_password') }}">
-            update password
-        </a>
-    </span>
-</div>
 
