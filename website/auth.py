@@ -129,3 +129,5 @@ def update_uname():
             flash('Email does not exist.', category='error')
 
     return render_template("edit_uname.html")
+
+

@@ -120,8 +120,8 @@ def sign_up():
 
 
 if __name__ == "__main__":
+    db.drop_all()
     db.create_all()
- #   db.drop_all()
     print('Creating database is success...')
    # app.run(debug=True)
    
