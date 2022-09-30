@@ -32,14 +32,36 @@
 
 <!-- Posted comment -->
 
+<!-- Posted comment -->
+
 {%if mycomment%}
 {%for comment in mycomment%}
 <div class="card mb-3">
   <div class="card-body">
     <div class="d-flex flex-start">
+    {% if current_user.is_authenticated %}
+      {% if img_view %}
       <img class="rounded-circle shadow-1-strong me-3"
-        src="https://i.pinimg.com/originals/25/00/0e/25000eecbc5abeb4e27223d0e515be16.jpg" alt="avatar" width="40"
-        height="40" />
+      src="{{url_for('views.view_img',user_id=comment.user_id)}}" alt="avatar" width="40"
+        height="40"/>
+        {%else%}
+        <img class="rounded-circle shadow-1-strong me-3"
+        src="{{url_for('views.view_img',user_id=current_user.id)}}" alt="avatar" width="40"
+          height="40" />
+        {%endif%}
+
+        {% else %}
+        {% if img_view %}
+        <img class="rounded-circle shadow-1-strong me-3"
+        src="{{url_for('views.view_img',user_id=comment.user_id)}}" alt="avatar" width="40"
+          height="40" />
+          {%else%}
+          <img class="rounded-circle shadow-1-strong me-3"
+          src="https://i.pinimg.com/originals/25/00/0e/25000eecbc5abeb4e27223d0e515be16.jpg" alt="avatar" width="40"
+          height="40" />
+          {%endif%}
+
+        {% endif %}
       <div class="w-100">
         <div class="d-flex justify-content-between align-items-center mb-3">
           <h6 class="text-primary fw-bold mb-0">
@@ -55,7 +77,6 @@
 </div>
 {% endfor %}
 {% endif %}
-
 
 <!-- Create Comment -->
 

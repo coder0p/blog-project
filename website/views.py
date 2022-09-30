@@ -121,7 +121,8 @@ def comments(id,slug):
                 return redirect(url_for('views.view_post',id=id,slug=slug_))
             
         if current_user.is_authenticated:
-            post = Comment(guestname =current_user.username, Comment=comment, post_id=id)                
+            post = Comment(guestname =current_user.username,user_id=current_user.id,
+                           Comment=comment, post_id=id)                
         else:
             post = Comment(guestname =guestname, Comment=comment, post_id=id)
         db.session.add(post)
