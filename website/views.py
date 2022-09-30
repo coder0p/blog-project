@@ -61,20 +61,17 @@ def create_post():
 
 @views.route("/viewpost/<int:id>/<slug>", methods=['GET', 'POST'])
 def view_post(id,slug):
+    img_view = Image.query.filter_by(user_id=id).order_by((Image.date_created.desc())).first()
     slug_= slugify(slug,allow_unicode=True)
     if not slug:
         return redirect(url_for('views.views_post'))
     else:
-        
-        post_view = Post.query.filter_by(id=id).all() 
+        post_view = Post.query.filter_by(id=id).all()
         post = db.session.query(Post).filter_by(slug = slug).first()
-
         comments_ = Comment.query.filter_by(post_id=id).order_by(Comment.date_created.desc()).all()
-    
-
     return render_template("view_post.html",current_user=current_user,slug=slug_,
-                               post_view=post_view,mycomment=comments_,post=post)
-
+                               post_view=post_view,mycomment=comments_,post=post , img_view= img_view)
+    
 
 # post view without slug url 
 
