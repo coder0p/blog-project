@@ -13,7 +13,7 @@ class User(db.Model,UserMixin):
     posts = db.relationship('Post', back_populates ='user')
     likes = db.relationship('Like', back_populates ='user', passive_deletes=True)
     image_ = db.relationship('Image', back_populates='image_', passive_deletes=True)
-
+    comments = db.relationship('Comment', back_populates ='user', passive_deletes=True)
 
 class Category(db.Model):
     """Users category model"""
@@ -53,10 +53,11 @@ class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     guestname = db.Column(db.String(150))
     Comment = db.Column(db.Text)
+    user_id = db.Column(db.Integer,db.ForeignKey('users.id', ondelete="CASCADE"), nullable=False)
     date_created = db.Column(db.DateTime, default=func.now())
     post_id = db.Column(db.Integer, db.ForeignKey('post.id',ondelete="CASCADE"), nullable=False)
     post = db.relationship('Post', back_populates ='comments', passive_deletes=True)
-    
+    user = db.relationship('User', back_populates ='comments', passive_deletes=True)
     
 class Like(db.Model):
     """Users like model"""
@@ -80,3 +81,4 @@ class Image(db.Model):
     type=db.Column(db.Text,nullable=False)
     user_id = db.Column(db.Integer,db.ForeignKey('users.id', ondelete="CASCADE"), nullable=False)
     image_ = db.relationship('User', back_populates='image_', passive_deletes=True)
+    
