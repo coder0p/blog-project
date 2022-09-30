@@ -1,5 +1,4 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
 from website.filters import fromnow, trim
@@ -8,7 +7,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = "helloworld"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///blog'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
+
 
 def create_app():
 

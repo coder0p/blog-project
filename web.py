@@ -24,14 +24,13 @@ class User(db.Model,UserMixin):
     posts = db.relationship('Post', back_populates ='user')
     likes = db.relationship('Like', back_populates ='user', passive_deletes=True)
     image_ = db.relationship('Image', back_populates='image_', passive_deletes=True)
-
-    
+    comments = db.relationship('Comment', back_populates ='user', passive_deletes=True)
 
 class Category(db.Model):
     """Users category model"""
     __tablename__ = "category"
     id = db.Column(db.Integer,primary_key = True)
-    cat_user = db.Column(db.Integer)
+    cat_user = db.Column(db.Integer, nullable=False)
     category = db.Column(db.String(100))
     posts = db.relationship('Post',back_populates='category')
     
@@ -50,9 +49,13 @@ class Post(db.Model):
     category = db.relationship('Category',back_populates='posts')
     likes = db.relationship('Like', back_populates='posts', passive_deletes=True)
     
-    def __init__(self, title):
+    def __init__(self,category, title,content,user_id,category_id,slug):
         self.title = title
-        self.slug = slugify(title,allow_unicode=True,replacements=[['|', 'or','.','_']])
+        self.content=content
+        self.user_id=user_id
+        self.category_id=category_id
+        self.category=category
+        self.slug = slugify(title,allow_unicode=True,replacements=[['or','-'], ['and','-']])
     
     
 class Comment(db.Model):
@@ -61,10 +64,11 @@ class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     guestname = db.Column(db.String(150))
     Comment = db.Column(db.Text)
+    user_id = db.Column(db.Integer,db.ForeignKey('users.id', ondelete="CASCADE"))
     date_created = db.Column(db.DateTime, default=func.now())
     post_id = db.Column(db.Integer, db.ForeignKey('post.id',ondelete="CASCADE"), nullable=False)
     post = db.relationship('Post', back_populates ='comments', passive_deletes=True)
-
+    user = db.relationship('User', back_populates ='comments', passive_deletes=True)
     
 class Like(db.Model):
     """Users like model"""
@@ -78,7 +82,6 @@ class Like(db.Model):
     user = db.relationship('User', back_populates='likes', passive_deletes=True)
     posts = db.relationship('Post', back_populates='likes', passive_deletes=True)
     
-    
 class Image(db.Model):
     """Users image model"""
     __tablename__ = "image"
@@ -89,6 +92,7 @@ class Image(db.Model):
     type=db.Column(db.Text,nullable=False)
     user_id = db.Column(db.Integer,db.ForeignKey('users.id', ondelete="CASCADE"), nullable=False)
     image_ = db.relationship('User', back_populates='image_', passive_deletes=True)
+    
 
 
 @app.route("/", methods=['GET', 'POST'])

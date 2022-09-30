@@ -1,7 +1,17 @@
-from . import db
 from flask_login import UserMixin
 from sqlalchemy.sql import func
 from slugify import slugify
+from flask_sqlalchemy import SQLAlchemy
+
+
+from . import app
+
+
+
+db = SQLAlchemy(app)
+
+
+
 
 class User(db.Model,UserMixin):
     """User account model."""
@@ -53,7 +63,7 @@ class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     guestname = db.Column(db.String(150))
     Comment = db.Column(db.Text)
-    user_id = db.Column(db.Integer,db.ForeignKey('users.id', ondelete="CASCADE"), nullable=False)
+    user_id = db.Column(db.Integer,db.ForeignKey('users.id', ondelete="CASCADE"))
     date_created = db.Column(db.DateTime, default=func.now())
     post_id = db.Column(db.Integer, db.ForeignKey('post.id',ondelete="CASCADE"), nullable=False)
     post = db.relationship('Post', back_populates ='comments', passive_deletes=True)

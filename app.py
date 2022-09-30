@@ -1,7 +1,7 @@
 from website import create_app
 import logging
 import argparse
-from website import db
+from website.models import db
 
 
 def parse_args():
@@ -9,8 +9,8 @@ def parse_args():
     parser.add_argument("-d", "--debug", help = "Enable debug logging", action="store_true")
     parser.add_argument("--db", help="Name of database to use", action="store", default="blog")
     subcommands = parser.add_subparsers(help="Commands", dest="command", required=True)
-    subcommands.add_parser("create_db", help="creating our database")
-    subcommands.add_parser("delete_db", help="deleting database table")
+    subcommands.add_parser("createdb", help="creating our database")
+    subcommands.add_parser("dropdb", help="deleting database table")
     subcommands.add_parser("run", help="for running flask app")
 
     return parser.parse_args()
@@ -34,12 +34,12 @@ def main():
     else:
         configure_logging(logging.INFO)
     
-    if args.command =="create_db":
+    if args.command =="createdb":
         logger.info("Creating Database")
         db.create_all()
     
-    elif args.command =="delete_db":
-        logger.info("deleting Database")
+    elif args.command =="dropdb":
+        logger.info("Dropping Database")
         db.drop_all()
         
     elif args.command =="run":

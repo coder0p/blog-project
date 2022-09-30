@@ -19,10 +19,10 @@
   <em>
     {{post.content}}
   </em>
-  
-  
+
+
   <span class="small position-absolute top-0 end-0 badge bg-dark ">
-    author: 
+    author:
     <i class="fas fa-user-circle ms-2"></i>
     <strong>{{post.user.username}}</strong>
   </span>
@@ -30,38 +30,24 @@
 <hr />
 
 
-<!-- Posted comment -->
+
 
 <!-- Posted comment -->
 
-{%if mycomment%}
+{%if mycomment %}
 {%for comment in mycomment%}
 <div class="card mb-3">
   <div class="card-body">
     <div class="d-flex flex-start">
-    {% if current_user.is_authenticated %}
-      {% if img_view %}
+      {% if comment.user_id %}
+      <img class="rounded-circle shadow-1-strong me-3" src="{{url_for('views.view_img',user_id=comment.user_id)}}"
+        alt="avatar" width="40" height="40" />
+      {%else%}
       <img class="rounded-circle shadow-1-strong me-3"
-      src="{{url_for('views.view_img',user_id=comment.user_id)}}" alt="avatar" width="40"
-        height="40"/>
-        {%else%}
-        <img class="rounded-circle shadow-1-strong me-3"
-        src="{{url_for('views.view_img',user_id=current_user.id)}}" alt="avatar" width="40"
-          height="40" />
-        {%endif%}
+        src="https://is5-ssl.mzstatic.com/image/thumb/Music115/v4/b8/10/b4/b810b4a7-a0a3-72e5-f2cd-c6a7c56b9e4c/artwork.jpg/1200x1200bf-60.jpg"
+        alt="avatar" width="40" height="40" />
+      {% endif %}
 
-        {% else %}
-        {% if img_view %}
-        <img class="rounded-circle shadow-1-strong me-3"
-        src="{{url_for('views.view_img',user_id=comment.user_id)}}" alt="avatar" width="40"
-          height="40" />
-          {%else%}
-          <img class="rounded-circle shadow-1-strong me-3"
-          src="https://i.pinimg.com/originals/25/00/0e/25000eecbc5abeb4e27223d0e515be16.jpg" alt="avatar" width="40"
-          height="40" />
-          {%endif%}
-
-        {% endif %}
       <div class="w-100">
         <div class="d-flex justify-content-between align-items-center mb-3">
           <h6 class="text-primary fw-bold mb-0">
@@ -80,16 +66,17 @@
 
 <!-- Create Comment -->
 
-  <!-- Registered user comment -->
+<!-- Registered user comment -->
 <div class="container mt-4 shadow-4">
   {% if current_user.is_authenticated %}
   {%if post%}
   <form action="{{ url_for('views.comments',id=post.id,slug=post.slug) }}" method="post" role="form">
     <div class="card-footer py-3 border-0" style="background-color: #f8f9fa;">
       <div class="d-flex flex-start w-100">
-        <img class="rounded-circle shadow-1-strong me-3"
-          src="https://i.pinimg.com/originals/25/00/0e/25000eecbc5abeb4e27223d0e515be16.jpg" alt="avatar" width="40"
-          height="40" />
+
+        <img class="rounded-circle shadow-1-strong me-3" src="{{url_for('views.view_img',user_id=current_user.id)}}"
+          alt="avatar" width="40" height="40" />
+
         <div class="form-outline w-100">
           <textarea class="form-control" id="textAreaExample" rows="4" style="background: #fff;"
             name="comment"></textarea>
@@ -104,9 +91,9 @@
   </form>
 
   {% else %}
-<!-- Guest user comment -->
+  <!-- Guest user comment -->
   {%if post%}
-<form action="{{ url_for('views.comments',id=post.id,slug=post.slug) }}" method="post" role="form">
+  <form action="{{ url_for('views.comments',id=post.id,slug=post.slug) }}" method="post" role="form">
     <div class="card-footer py-3 border-0" style="background-color: #f8f9fa;">
       <div class="form-outline mb-3">
         <input type="text" id="name" class="form-control" name="name" />
@@ -116,8 +103,8 @@
 
       <div class="d-flex flex-start w-100">
         <img class="rounded-circle shadow-1-strong me-3"
-          src="https://i.pinimg.com/originals/25/00/0e/25000eecbc5abeb4e27223d0e515be16.jpg" alt="avatar" width="40"
-          height="40" />
+          src="https://is5-ssl.mzstatic.com/image/thumb/Music115/v4/b8/10/b4/b810b4a7-a0a3-72e5-f2cd-c6a7c56b9e4c/artwork.jpg/1200x1200bf-60.jpg"
+          alt="avatar" width="40" height="40" />
         <div class="form-outline w-100">
           <textarea class="form-control" id="textAreaExample" rows="4" style="background: #fff;"
             name="comment"></textarea>

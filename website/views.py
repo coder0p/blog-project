@@ -1,8 +1,7 @@
 from flask import Blueprint, render_template, request,Response, flash, redirect, url_for,jsonify
 from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
-from .models import User,Post,Comment,Category,Like,Image
-from . import db
+from .models import db,User,Post,Comment,Category,Like,Image
 from slugify import slugify
 
 
@@ -61,7 +60,6 @@ def create_post():
 
 @views.route("/viewpost/<int:id>/<slug>", methods=['GET', 'POST'])
 def view_post(id,slug):
-    img_view = Image.query.filter_by(user_id=id).order_by((Image.date_created.desc())).first()
     slug_= slugify(slug,allow_unicode=True)
     if not slug:
         return redirect(url_for('views.views_post'))
@@ -70,7 +68,7 @@ def view_post(id,slug):
         post = db.session.query(Post).filter_by(slug = slug).first()
         comments_ = Comment.query.filter_by(post_id=id).order_by(Comment.date_created.desc()).all()
     return render_template("view_post.html",current_user=current_user,slug=slug_,
-                               post_view=post_view,mycomment=comments_,post=post , img_view= img_view)
+                               post_view=post_view,mycomment=comments_,post=post)
     
 
 # post view without slug url 
