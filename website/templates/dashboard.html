@@ -5,7 +5,7 @@
 <nav aria-label="breadcrumb" class="pb-4">
     <ol class="breadcrumb fs-6">
         <li class="breadcrumb-item"><a href="{{ url_for('views.home') }}">Home</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+        <li class="breadcrumb-item active" aria-current="page">Profile</li>
     </ol>
 </nav>
 
@@ -19,17 +19,29 @@
                     {% if img_view %}
                     <img src="{{url_for('views.view_img',user_id=current_user.id,id=img_view.id)}}"
                         class="rounded-circle" style="width: 150px; height: 150px; object-fit: cover" alt="Avatar" />
-                       {% else %}
-                       <img src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" class="rounded-circle"
-                       style="width: 150px;" alt="Avatar" />
-                       {% endif %}
+                    {% else %}
+                    <img src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png"
+                        class="rounded-circle" style="width: 150px;" alt="Avatar" />
+                    {% endif %}
                 </div>
                 <div class="card-body text-center">
                     <h4 class="mb-4">{{user.username}}</h4>
                     <p>Email: {{user.email}}</p>
                     <hr />
                     <button type="button" class="btn btn-dark btn-sm" data-mdb-toggle="modal"
-                        data-mdb-target="#exampleModal">Edit profile</button>
+                        data-mdb-target="#pictureModal">Edit profile picture</button>
+                </div>
+                <div class="dropdown text-center">
+                    <button class="btn btn-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton"
+                        data-mdb-toggle="dropdown" aria-expanded="false">
+                        update profile
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <li><a class="dropdown-item" href="#" data-mdb-toggle="modal"
+                                data-mdb-target="#emailModal">email</a></li>
+                        <li><a class="dropdown-item" href="#">username</a></li>
+                        <li><a class="dropdown-item" href="#">password</a></li>
+                    </ul>
                 </div>
 
             </div>
@@ -137,12 +149,13 @@
 </div>
 
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- profile picture Modal -->
+
+<div class="modal fade" id="pictureModal" tabindex="-1" aria-labelledby="pictureModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Upload image</h5>
+                <h5 class="modal-title" id="pictureModalLabel">Upload image</h5>
                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -158,6 +171,57 @@
         </div>
     </div>
 </div>
+
+
+<!-- modal email -->
+
+<div class="modal fade" id="emailModal" tabindex="-1" aria-labelledby="emailModalLabel" data-mdb-backdrop="static"
+    data-mdb-keyboard="false" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="emailModalLabel">Update your email</h5>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" name="email-updation" action="{{ url_for('auth.update') }}">
+                    <div class="mb-3">
+                        <label for="email" class="col-form-label">Current email</label>
+                        <input type="email" class="form-control" id="email" name="email" autocomplete="off">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="col-form-label">Password</label>
+                        <input type="password" class="form-control" id="password" name="password"></input>
+                    </div>
+                    <div class="mb-3 pt-4">
+                        <label for="new-email" class="col-form-label">Enter new email</label>
+                        <input type="email" class="form-control" id="new-email" name="new-email"></input>
+                    </div>
+                    <button type="submit" class="btn btn-success ">update</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- username edit-->
+<div>
+    <span>
+        <a class="btn btn-sm btn-primary" left='10' href="{{ url_for('auth.update_uname') }}">
+            Edit username
+        </a>
+    </span>
+</div>
+
+{% endblock %}
+
+
+
+
 <!-- email edit-->
 <div>
     <span>
@@ -185,4 +249,3 @@
     </span>
 </div>
 
-{% endblock %}
