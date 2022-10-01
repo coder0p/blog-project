@@ -5,6 +5,8 @@
     padding-top: 70px;
     
   }
+/* ------------------------- */
+
 
 
 /* base.html alert message   */
@@ -17,22 +19,28 @@
     top: 0;
     z-index: 99999;
   }
-
+/* ---------------------- */
 
 
 
 
   /* password secondary label*/
+
   
   .passlabel{
     color: #2841ca;
    
   }
 
+/* ----------------- */
+
 /* category icon */
+
   .star{
     color:gold;
   }
+
+/* ----------------- */
 
 
 
@@ -41,6 +49,7 @@
 
 
 /* User dropdown on hover display */
+
 .dropdown {
     position: relative;
     display: inline-block;
@@ -57,7 +66,12 @@
 
 
 
+/* --------------------------- */
+
+
 /* flask flash meessage fade out */
+
+
   .message-fade{
     animation:message-fade 0.5s 1;
    -webkit-animation:message-fade 0.5s 1;
@@ -80,16 +94,24 @@
 }
 
 
+/* ------------------------------- */
 
-.add-category-btn, .start-50{
-  left: 23% !important;
+
+/* add category button alignment */
+
+.add-category-btn, .start-50 {
+  left: 92% !important;
 }
+
+/* --------------------------- */
+
+
+/* category input field */
 
 #category-form{
   display: none;
 }
 
+/* ------------- */
 
-.add-category-btn, .start-50 {
-  left: 90% !important;
-}
+

@@ -34,6 +34,7 @@ def create_post():
             flash('category cannot be empty', category='error')
         elif not title:
             flash('title cannot be empty', category='error')
+            return render_template("posts.html")
         elif not content:
             flash('content cannot be empty', category='error')
         else:
@@ -144,7 +145,7 @@ def add_category():
             category_exist = Category.query.filter_by(category = cat).first()
             if category_exist:
                 flash("category added..")
-                return redirect(url_for('views.create_post'))
+                return redirect(url_for('views.user_dashboard',id = current_user.id))
         category = Category(category = cat,cat_user =current_user.id)
         db.session.add(category)    
         db.session.commit()
@@ -218,7 +219,10 @@ def user_dashboard(id):
     user = User.query.filter_by(id = id).first()
     posts = Post.query.filter_by(user_id = id).order_by((Post.date_created.desc())).all()
     category = Category.query.filter_by(cat_user = id)
-    return render_template("dashboard.html",user = user,category=category ,posts = posts,img_view =img_view)
+    category_list = []
+    for cat in category:
+       category_list.append(cat.category)
+    return render_template("dashboard.html",user = user,category= category, category_list= category_list, posts = posts,img_view =img_view)
 
 
 

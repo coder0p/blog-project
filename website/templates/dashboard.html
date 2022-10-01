@@ -9,7 +9,7 @@
     </ol>
 </nav>
 
-<div class="container">
+<div class="container mb-5">
 
     <div class="row">
         <div class="col-sm-3">
@@ -17,7 +17,7 @@
                 <div class="card-up" style="background-color: #9d789b;"></div>
                 <div class="avatar mx-auto bg-white">
                     {% if img_view %}
-                    <img src="{{url_for('views.view_img',user_id=current_user.id,id=img_view.id)}}"
+                    <img src="{{url_for('views.view_img',user_id=current_user.id)}}"
                         class="rounded-circle" style="width: 150px; height: 150px; object-fit: cover" alt="Avatar" />
                     {% else %}
                     <img src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png"
@@ -31,7 +31,7 @@
                     <button type="button" class="btn btn-dark btn-sm" data-mdb-toggle="modal"
                         data-mdb-target="#pictureModal">Edit profile picture</button>
                 </div>
-                <div class="dropdown text-center">
+                <div class="dropdown text-center mb-3">
                     <button class="btn btn-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton"
                         data-mdb-toggle="dropdown" aria-expanded="false">
                         update profile
@@ -49,19 +49,21 @@
             </div>
 
             <!-- category -->
+
             <div class="mt-4 text-center">
                 <div class="btn-group">
                     <button class="btn btn-success btn-sm" type="button" onclick="categoryInput()" id="cat-btn">Add
                         categories</button>
-
-                    {% for cat in category %}
-                    {% if cat %}
-                    <button type="button" class="btn btn-sm btn-danger dropdown-toggle dropdown-toggle-split"
+                            
+                        {% if category_list %}
+                        <button type="button" class="btn btn-sm btn-danger dropdown-toggle dropdown-toggle-split"
                         data-mdb-toggle="dropdown" aria-expanded="false">
                         Delete categories
                         <span class="visually-hidden">Toggle Dropdown</span>
                     </button>
+                    {%endif%}
                     <ul class="dropdown-menu">
+                        {% for cat in category %}
                         <li>
                             <a class="dropdown-item position-relative" href="#">
                                 {{cat.category}}
@@ -77,9 +79,9 @@
                                 {% endif %}
                             </a>
                         </li>
+                        {% endfor %}
                     </ul>
-                    {% endif %}
-                    {% endfor %}
+                   
                 </div>
 
                 <!--Add  category  -->
@@ -98,7 +100,9 @@
                 </form>
             </div>
         </div>
+
         <div class="col-sm-9  text-center">
+    
             <h4 class="border border-secondary rounded-pill text-dark">Your recent posts</h4>
 
             <!-- Displaying created post in home page -->
@@ -150,6 +154,9 @@
     </div>
 </div>
 
+
+
+<!-- Modals -->
 
 <!-- profile picture Modal -->
 
@@ -270,7 +277,7 @@
                         <input type="password" class="form-control" id="new-username" name="new-password"></input>
                     </div>
                     <div class="mb-3">
-                        <label for="repeat_password" class="col-form-label">Password</label>
+                        <label for="repeat_password" class="col-form-label">confirm password</label>
                         <input type="password" class="form-control" id="repeat_password" name="repeat_password"></input>
                     </div>
                     <button type="submit" class="btn btn-success ">update</button>
