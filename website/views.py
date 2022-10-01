@@ -33,8 +33,7 @@ def create_post():
         if not cat :
             flash('category cannot be empty', category='error')
         elif not title:
-            flash('title cannot be empty', category='error')
-            return render_template("posts.html")
+            flash('title cannot be empty', category='error') 
         elif not content:
             flash('content cannot be empty', category='error')
         else:
@@ -218,12 +217,8 @@ def user_dashboard(id):
     img_view = Image.query.filter_by(user_id=id).first() 
     user = User.query.filter_by(id = id).first()
     posts = Post.query.filter_by(user_id = id).order_by((Post.date_created.desc())).all()
-    category = Category.query.filter_by(cat_user = id)
-    category_list = []
-    for cat in category:
-       category_list.append(cat.category)
-    return render_template("dashboard.html",user = user,category= category, category_list= category_list, posts = posts,img_view =img_view)
-
+    categories = Category.query.filter_by(cat_user = id).all()
+    return render_template("dashboard.html",user = user, ategories= categories, posts = posts,img_view =img_view)
 
 
 

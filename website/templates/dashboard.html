@@ -55,7 +55,7 @@
                     <button class="btn btn-success btn-sm" type="button" onclick="categoryInput()" id="cat-btn">Add
                         categories</button>
                             
-                        {% if category_list %}
+                        {% if categories %}
                         <button type="button" class="btn btn-sm btn-danger dropdown-toggle dropdown-toggle-split"
                         data-mdb-toggle="dropdown" aria-expanded="false">
                         Delete categories
@@ -63,7 +63,7 @@
                     </button>
                     {%endif%}
                     <ul class="dropdown-menu">
-                        {% for cat in category %}
+                        {% for cat in categories %}
                         <li>
                             <a class="dropdown-item position-relative" href="#">
                                 {{cat.category}}
