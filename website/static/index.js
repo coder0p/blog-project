@@ -12,7 +12,7 @@ function formValidation() {
     if (allLetter(username)) {
       if (password_validation(password, 7, 12)) {
         if (matchPassword(password, repeat_password)) {
-
+          document.getElementById("register-btn").setAttribute("type","submit")
         }
       }
     }
@@ -26,7 +26,7 @@ function formValidation() {
   function password_validation(password, minimum, maximum) {
     var password_length = password.value.length;
     if (password_length == 0 || password_length > maximum || password_length < minimum) {
-      alert("Password should not be empty / length be between " + minimum + " to " + maximum);
+      swal("Invalid","Password length should be 7 to 12 characters","error");
       password.focus();
       return false;
     }
@@ -39,7 +39,7 @@ function formValidation() {
       return true;
     }
     else {
-      alert('Username must have alphabet characters only');
+      swal("Invalid","Username must have alphabet characters only","error");
       username.focus();
       return false;
     }
@@ -53,9 +53,18 @@ function formValidation() {
     }
     else {
 
-      alert("Enter valid email id", "error");
+      swal("Invalid","Enter valid email id","error");
 
     }
+  }
+  function matchPassword(password,repeat_password){
+    if (password.value != repeat_password.value) {
+      swal("Passwords did not match");
+    }else{
+
+      return true
+    }
+    
   }
   
 }
@@ -72,7 +81,7 @@ function labelInvisible(){
 
 
 
-// 
+// category adding input button hide and show
 function categoryInput(){
   form = document.getElementById('category-form');
   if(form.style.display == "block"){
@@ -84,7 +93,7 @@ function categoryInput(){
 
 
 
-
+//  post clap
 function like(postId) {
   const likeCount = document.getElementById(`likes-count-${postId}`);
   console.log(likeCount)

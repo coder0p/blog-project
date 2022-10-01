@@ -116,7 +116,7 @@
   <!-- Like view -->
 
   {% if current_user.is_authenticated %}
-  <div title="clap" class="p-2 position-relative">
+  <div title="comments" class="p-2 position-relative">
     <span id="likes-count-{{post.id}}">
       {{ post.likes|length }}</span>
     {% if current_user.id in post.likes|map(attribute="user_id")|list %}

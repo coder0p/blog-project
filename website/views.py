@@ -218,7 +218,7 @@ def user_dashboard(id):
     user = User.query.filter_by(id = id).first()
     posts = Post.query.filter_by(user_id = id).order_by((Post.date_created.desc())).all()
     categories = Category.query.filter_by(cat_user = id).all()
-    return render_template("dashboard.html",user = user, ategories= categories, posts = posts,img_view =img_view)
+    return render_template("dashboard.html",user = user, categories= categories, posts = posts,img_view =img_view)
 
 
 
