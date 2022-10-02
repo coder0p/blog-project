@@ -43,7 +43,7 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(150))
     content = db.Column(db.Text, nullable=False)
-    date_created = db.Column(db.DateTime, default=func.now())
+    timestamp = db.Column(db.DateTime, default=func.now())
     user_id = db.Column(db.Integer, db.ForeignKey('users.id',ondelete="CASCADE"), nullable=False)
     slug = db.Column(db.Text, index=True)
     user = db.relationship('User', back_populates ='posts')
@@ -69,7 +69,7 @@ class Comment(db.Model):
     guestname = db.Column(db.String(150))
     Comment = db.Column(db.Text)
     user_id = db.Column(db.Integer,db.ForeignKey('users.id', ondelete="CASCADE"))
-    date_created = db.Column(db.DateTime, default=func.now())
+    timestamp = db.Column(db.DateTime, default=func.now())
     post_id = db.Column(db.Integer, db.ForeignKey('post.id',ondelete="CASCADE"), nullable=False)
     post = db.relationship('Post', back_populates ='comments', passive_deletes=True)
     user = db.relationship('User', back_populates ='comments', passive_deletes=True)
@@ -80,7 +80,7 @@ class Like(db.Model):
     """Users like model"""
     __tablename__ = "like"
     id = db.Column(db.Integer, primary_key=True)
-    date_created = db.Column(db.DateTime(timezone=True), default=func.now())
+    timestamp = db.Column(db.DateTime(timezone=True), default=func.now())
     user_id = db.Column(db.Integer, db.ForeignKey(
         'users.id', ondelete="CASCADE"), nullable=False)
     post_id = db.Column(db.Integer, db.ForeignKey(
@@ -96,7 +96,7 @@ class Image(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     img=db.Column(db.LargeBinary,unique=False,nullable=False)
     img_name=db.Column(db.Text,nullable=False)
-    date_created = db.Column(db.DateTime(timezone=True), default=func.now())
+    timestamp = db.Column(db.DateTime(timezone=True), default=func.now())
     type=db.Column(db.Text,nullable=False)
     user_id = db.Column(db.Integer,db.ForeignKey('users.id', ondelete="CASCADE"), nullable=False)
     image_ = db.relationship('User', back_populates='image_', passive_deletes=True)

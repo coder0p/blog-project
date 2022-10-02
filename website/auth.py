@@ -114,7 +114,7 @@ def update_email():
 @login_required
 def update_username():
     if request.method == 'POST':
-        email = request.form.get("unameEmail")
+        email = request.form.get("userNameEmail")
         password = request.form.get("password_")
        
         new_username = request.form.get("newUser")
@@ -159,9 +159,7 @@ def update_password():
 
         old_id=current_user.id
         old_name=current_user.username
-        old_email=current_user.email
-        old_password=current_user.password
-        
+        old_email=current_user.email        
         
         new_user=User(id=old_id,email=old_email,username=old_name,
                 password=generate_password_hash(
@@ -178,9 +176,9 @@ def update_password():
                 db.session.merge( new_user )
                 db.session.commit()
                 login_user( new_user, remember=True)
-                return redirect(url_for('views.user_dashboard',id=current_user.id))
+                return redirect(url_for('views.user_dashboard',id=current_user.id,username=current_user.username))
             else:
                 flash('Password is incorrect.', category='error')
         else:
             flash('Email does not exist.', category='error')
-    return redirect(url_for('views.user_dashboard',id=current_user.id))
+    return redirect(url_for('views.user_dashboard',id=current_user.id,username=current_user.username))

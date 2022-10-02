@@ -80,7 +80,7 @@
     <span class="small position-absolute top-0 start-0">
       <i class="fas fa-user-circle"></i>
       posted by <strong>{{post.user.username}}</strong>
-      <i>{{post.date_created|timesago}}</i></span>
+      <i>{{post.timestamp|timesago}}</i></span>
       
       {% if post.category.category %}
     <span class="badge bg-dark position-absolute top-0 end-0 ">
@@ -124,6 +124,7 @@
 {% if post %}
 <a href="{{ url_for('views.view_post', id=post.id,slug=post.title) }}">
   <i class="fa-regular fa-comment" ></i> {{ post.comments | length  }}
+  <h1>{{post.comments}}</h1>
   </a>
 
 {% endif %}

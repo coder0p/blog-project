@@ -122,7 +122,7 @@
                     <span class="small position-absolute top-0 start-0">
                         <i class="fas fa-user-circle"></i>
                         posted by <strong>you</strong>
-                        <i>{{post.date_created|timesago}}</i></span>
+                        <i>{{post.timestamp|timesago}}</i></span>
 
                     {% if post.category.category %}
                     <span class="badge bg-dark position-absolute top-0 end-0 ">
@@ -215,11 +215,11 @@
                         <label for="new-email" class="col-form-label">Enter new email</label>
                         <input type="text" class="form-control" id="new-email" name="newEmail"></input>
                     </div>
-                    <button type="button" class="btn btn-success" onclick="ValidateNewEmail()" id="emailUpdat">update</button>
+                    <button type="button" class="btn btn-success" onclick="ValidateNewEmail()" id="emailUpdate_">update</button>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" id="emailUpdat" data-mdb-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary"  data-mdb-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -240,7 +240,7 @@
                 <form method="post" name="nameUpdate" action="{{ url_for('auth.update_username') }}">
                     <div class="mb-3">
                         <label for="email2" class="col-form-label">Email</label>
-                        <input type="email" class="form-control" id="email2" name="unameEmail" autocomplete="off">
+                        <input type="email" class="form-control" id="email2" name="userNameEmail" autocomplete="off">
                     </div>
                     <div class="mb-3">
                         <label for="password2" class="col-form-label">Password</label>

@@ -121,7 +121,7 @@ function ValidateNewEmail() {
   console.log("DSDSAD");
   
     if (ValidatesEmail(email)) {
-      document.getElementById("emailUpdat").setAttribute("type","submit")
+      document.getElementById("emailUpdate_").setAttribute("type","submit")
   }
   
   return false;
