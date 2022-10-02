@@ -25,6 +25,8 @@ class User(db.Model,UserMixin):
     image_ = db.relationship('Image', back_populates='image_', passive_deletes=True)
     comments = db.relationship('Comment', back_populates ='user', passive_deletes=True)
 
+
+
 class Category(db.Model):
     """Users category model"""
     __tablename__ = "category"
@@ -32,6 +34,8 @@ class Category(db.Model):
     cat_user = db.Column(db.Integer, nullable=False)
     category = db.Column(db.String(100))
     posts = db.relationship('Post',back_populates='category')
+
+
     
 class Post(db.Model):
     """Users posts model."""
@@ -57,6 +61,7 @@ class Post(db.Model):
         self.slug = slugify(title,allow_unicode=True,replacements=[['or','-'], ['and','-']])
     
     
+
 class Comment(db.Model):
     """Users comment model"""
     __tablename__ = "comment"
@@ -68,7 +73,9 @@ class Comment(db.Model):
     post_id = db.Column(db.Integer, db.ForeignKey('post.id',ondelete="CASCADE"), nullable=False)
     post = db.relationship('Post', back_populates ='comments', passive_deletes=True)
     user = db.relationship('User', back_populates ='comments', passive_deletes=True)
-    
+
+
+
 class Like(db.Model):
     """Users like model"""
     __tablename__ = "like"
@@ -80,6 +87,8 @@ class Like(db.Model):
         'post.id', ondelete="CASCADE"), nullable=False)
     user = db.relationship('User', back_populates='likes', passive_deletes=True)
     posts = db.relationship('Post', back_populates='likes', passive_deletes=True)
+
+   
     
 class Image(db.Model):
     """Users image model"""

@@ -40,12 +40,16 @@ def sign_up():
 
         if email_exists:
             flash('Email is already in use!', category='error')
+            return render_template("registration.html"),409
         elif email == "":
             flash("Email shouldn't be empty!", category='error')
+            return render_template("registration.html"),204
         elif username_exists:
             flash('Username is already in use!', category='error')
+            return render_template("registration.html"),409
         elif password1 != password2:
             flash('Password don\'t match!', category='error')
+            return render_template("registration.html"),401
         elif len(username) < 2:
             flash('Username is too short!', category='error')
         elif len(password1) <= 6:

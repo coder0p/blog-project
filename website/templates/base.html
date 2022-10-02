@@ -25,7 +25,8 @@
 
 
   <!-- favi-icon -->
-  <link rel="icon" type="image/x-icon" href="https://w7.pngwing.com/pngs/292/43/png-transparent-blogger-logo-computer-icons-encapsulated-postscript-logotypes-cdr-text-logo.png">
+  <link rel="icon" type="image/x-icon"
+    href="https://w7.pngwing.com/pngs/292/43/png-transparent-blogger-logo-computer-icons-encapsulated-postscript-logotypes-cdr-text-logo.png">
 
   <title>{% block title %}{% endblock %}</title>
 
@@ -37,7 +38,8 @@
   {% if messages %}
   {% for category, message in messages %}
   {% if category == "error" %}
-  <div class="alert alert-danger alter-dismissible fade show d-flex justify-content-center  message-fade" role="alert" id="top-alert">
+  <div class="alert alert-danger alter-dismissible fade show d-flex justify-content-center  message-fade" role="alert"
+    id="top-alert">
     <strong>{{ message }}</strong>
     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
   </div>
@@ -59,27 +61,23 @@
   </div>
 
 
-  
-  <!-- bootstrap cdn  -->
-  <script 
-  src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-  integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" 
-  crossorigin="anonymous"
-  >
-</script>
-  
-  <!-- cdn of mdb -->
-  <script type="text/javascript" 
-  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.js"
-  >
-</script>
 
-<!-- sweetalert -->
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-  
+  <!-- bootstrap cdn  -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
+
+  <!-- cdn of mdb -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.js">
+  </script>
+
+  <!-- sweetalert -->
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
   <!-- template js file -->
   <script src="{{url_for('static', filename='index.js')}}"></script>
 
-  
+
 </body>
+
 </html>

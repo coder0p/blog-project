@@ -59,7 +59,7 @@ function formValidation() {
   }
   function matchPassword(password,repeat_password){
     if (password.value != repeat_password.value) {
-      swal("Passwords did not match");
+      swal("Invalid","Passwords did not match","error");
     }else{
 
       return true
