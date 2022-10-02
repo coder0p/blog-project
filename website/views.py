@@ -220,10 +220,11 @@ def user_dashboard(id,username):
 
 
 
+# profile picture insertion into database
 
 @views.route("/pic", methods=['POST'])
 @login_required
-def picture ():
+def picture():
     pic = request.files['image']
     if not pic:
         flash('please browse any file', category='error')
@@ -238,8 +239,12 @@ def picture ():
             img=Image(img=pic.read(),type=type,img_name=filename ,user_id=current_user.id)
             db.session.add(img)
             db.session.commit()
+            flash('Updated successfully')
         return redirect(url_for('views.user_dashboard',id=current_user.id,username=current_user.username))
     
+
+
+# profile picture view 
 
 @views.route("pic/<int:user_id>", methods=['GET', 'POST'])
 def view_img(user_id):

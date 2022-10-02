@@ -4,8 +4,10 @@
 
 <nav aria-label="breadcrumb" class="pb-4">
   <ol class="breadcrumb fs-6">
-      <li class="breadcrumb-item lead"><a href="{{ url_for('views.home') }}">Home</a></li>
-      <li class="breadcrumb-item active lead" aria-current="page">Create post</li>
+    <li class="breadcrumb-item lead"><a
+        href="{{ url_for('views.user_dashboard', id=current_user.id, username=current_user.username) }}">Profile</a>
+    </li>
+    <li class="breadcrumb-item active lead" aria-current="page">Create post</li>
   </ol>
 </nav>
 
@@ -13,7 +15,7 @@
 
   <h1 class="text-center pt-2"><span class="badge bg-primary">Create Post</span></h1>
 
-  
+
   <!-- Post creation form -->
 
   <form method="post" name="form" class="pt-4">

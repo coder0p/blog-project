@@ -3,8 +3,15 @@ from .models import db,User
 from flask_login import login_user, logout_user, login_required,current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
+
+
+
 auth = Blueprint("auth", __name__)
 
+
+
+
+# user login 
 
 @auth.route("/login", methods=['GET', 'POST'])
 def login():
@@ -25,6 +32,12 @@ def login():
 
     return render_template("login.html")
 
+
+
+
+
+
+# user registration
 
 @auth.route("/signup", methods=['GET', 'POST'])
 def sign_up():
@@ -68,12 +81,21 @@ def sign_up():
     return render_template("registration.html")
 
 
+
+
+
+# user logout
+
 @auth.route("/logout")
 @login_required
 def logout():
     logout_user()
     flash('logout successfully..',category='success')
     return redirect(url_for("views.home"))
+
+
+
+#user email updation
 
 @auth.route("/email", methods=['POST',])
 def update_email():
@@ -95,6 +117,9 @@ def update_email():
         else:
             new_user=User(id=old_id,email=new_email,username=old_name,password=old_pass)
             if user:
+                if user.email == email:
+                    flash("Already in use, please enter different email..!", category="error")
+                    return redirect(url_for('views.user_dashboard',id=current_user.id,username=current_user.username))
                 if check_password_hash(user.password, password):
                     flash("Email updated successfully..", category='success')
                     db.session.merge(new_user)
@@ -109,6 +134,10 @@ def update_email():
     return redirect(url_for('views.user_dashboard',id=current_user.id,username=current_user.username))
 
 
+
+
+
+#user username updation
 
 @auth.route("/username", methods=['POST',])
 @login_required
@@ -131,6 +160,9 @@ def update_username():
         else:
             new_user=User(id=old_id,email=email,username=new_username,password=old_pass)
             if user:
+                if user.username == new_username:
+                    flash('Username already exists', category='error')
+                    return redirect(url_for('views.user_dashboard',id=current_user.id,username=current_user.username))
                 if check_password_hash(user.password, password):
                     flash("username updated successfully..", category='success')
                     db.session.merge(new_user)
@@ -146,13 +178,16 @@ def update_username():
 
 
 
+
+# user password updation
+
 @auth.route("/password", methods=['POST',])
 @login_required
 def update_password():
     if request.method == 'POST':
         email = request.form.get("email")
         password = request.form.get("password")
-        new_password = request.form.get("new-password")
+        new_password = request.form.get("newPassword")
         confirm_password = request.form.get("repeat_password")
 
         user = User.query.filter_by(email=email).first()

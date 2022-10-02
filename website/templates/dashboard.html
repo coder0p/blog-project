@@ -40,9 +40,9 @@
                             update profile
                         </button>
                         <ul class="dropdown-menu text-center" aria-labelledby="dropdownMenuButton">
-                            <li><a class="dropdown-item list-group-item px-3 border-0 rounded-3 list-group-item-success" 
-                                    href="#" data-mdb-toggle="modal"
-                                    data-mdb-target="#pictureModal">Edit picture</a></li>
+                            <li><a class="dropdown-item list-group-item px-3 border-0 rounded-3 list-group-item-success"
+                                    href="#" data-mdb-toggle="modal" data-mdb-target="#pictureModal">Edit picture</a>
+                            </li>
 
                             <li><a class="dropdown-item" href="#" data-mdb-toggle="modal"
                                     data-mdb-target="#emailModal">Edit email</a></li>
@@ -194,7 +194,7 @@
 <!-- modal email -->
 
 <div class="modal fade" id="emailModal" tabindex="-1" aria-labelledby="emailModalLabel" data-mdb-backdrop="static"
-    data-mdb-keyboard="false" aria-hidden="true"  name="emailUpdates">
+    data-mdb-keyboard="false" aria-hidden="true" name="emailUpdates">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -215,11 +215,12 @@
                         <label for="new-email" class="col-form-label">Enter new email</label>
                         <input type="text" class="form-control" id="new-email" name="newEmail"></input>
                     </div>
-                    <button type="button" class="btn btn-success" onclick="ValidateNewEmail()" id="emailUpdate_">update</button>
+                    <button type="button" class="btn btn-success" onclick="ValidateNewEmail()"
+                        id="emailUpdate_">update</button>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary"  data-mdb-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -250,11 +251,12 @@
                         <label for="newusernam" class="col-form-label">Enter new username</label>
                         <input type="text" class="form-control" id="newusernam" name="newUser"></input>
                     </div>
-                    <button type="button" onclick="ValidateNewname()" id="newUsername" class="btn btn-success ">update</button>
+                    <button type="button" onclick="ValidateNewname()" id="newUsername"
+                        class="btn btn-success ">update</button>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button"  class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -272,7 +274,7 @@
                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="post" name="email-updation" action="{{ url_for('auth.update_password') }}">
+                <form method="post" name="passwordUpdation" action="{{ url_for('auth.update_password') }}">
                     <div class="mb-3">
                         <label for="email3" class="col-form-label">Email</label>
                         <input type="email" class="form-control" id="email3" name="email" autocomplete="off">
@@ -282,14 +284,15 @@
                         <input type="password" class="form-control" id="password3" name="password"></input>
                     </div>
                     <div class="mb-3 pt-4">
-                        <label for="new-password" class="col-form-label">Enter new password</label>
-                        <input type="password" class="form-control" id="new-username" name="new-password"></input>
+                        <label for="newPasswordId" class="col-form-label">Enter new password</label>
+                        <input type="password" class="form-control" id="newPasswordId" name="newPassword"></input>
                     </div>
                     <div class="mb-3">
                         <label for="repeat_password" class="col-form-label">confirm password</label>
                         <input type="password" class="form-control" id="repeat_password" name="repeat_password"></input>
                     </div>
-                    <button type="submit" class="btn btn-success ">update</button>
+                    <button type="button" class="btn btn-success" id="newPassBtn"
+                        onclick="ValidateNewPass()">update</button>
                 </form>
             </div>
             <div class="modal-footer">
