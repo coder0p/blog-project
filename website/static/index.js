@@ -112,3 +112,27 @@ function like(postId) {
       }
     })
 }
+
+
+function ValidateNewEmail() {
+  var email = document.emailUpdate.newEmail;
+  
+  if (ValidatesEmail(email)) {
+    document.getElementById("emailUpdat").setAttribute("type","submit")
+  }
+  
+  return false;
+  
+  function ValidatesEmail(email) {
+    var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (email.value.match(mailformat)) {
+      return true;
+    }
+    else {
+  
+      swal("Invalid","Enter valid email id","error");
+  
+    }
+  }
+  
+  }

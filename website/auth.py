@@ -80,28 +80,33 @@ def update_email():
     if request.method == 'POST':
         email = request.form.get("email")
         password = request.form.get("password")
-        new_email = request.form.get("email_")
+        new_email = request.form.get("newEmail")
 
         user = User.query.filter_by(email=email).first()
         
         old_name=current_user.username
         old_id=current_user.id
         old_pass=current_user.password
-        new_user=User(id=old_id,email=new_email,username=old_name,password=old_pass)
 
-        if user:
-            if check_password_hash(user.password, password):
-                flash("Email updated successfully..", category='success')
-                db.session.merge(new_user)
-                db.session.commit()
-                login_user(new_user, remember=True)
-                return redirect(url_for('views.user_dashboard',id=current_user.id))
-            else:
-                flash('Password is incorrect.', category='error')
+        if new_email == "":
+            flash("Email shouldn't be empty!", category='error')
+        elif len(new_email) < 10:
+            flash('Email is too short!', category='error')
         else:
-            flash('Email does not exist.', category='error')
+            new_user=User(id=old_id,email=new_email,username=old_name,password=old_pass)
+            if user:
+                if check_password_hash(user.password, password):
+                    flash("Email updated successfully..", category='success')
+                    db.session.merge(new_user)
+                    db.session.commit()
+                    login_user(new_user, remember=True)
+                    return redirect(url_for('views.user_dashboard',id=current_user.id,username=current_user.username))
+                else:
+                    flash('Password is incorrect.', category='error')
+            else:
+                flash('Email does not exist.', category='error')
 
-    return redirect(url_for('views.user_dashboard',id=current_user.id))
+    return redirect(url_for('views.user_dashboard',id=current_user.id,username=current_user.username))
 
 
 
