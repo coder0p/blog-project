@@ -209,9 +209,9 @@ def like(post_id):
 
 #user dashboard 
 
-@views.route("/dashboard/<int:id>")
+@views.route("/users/<int:id>/<username>")
 @login_required
-def user_dashboard(id):
+def user_dashboard(id,username):
     img_view = Image.query.filter_by(user_id=id).first() 
     user = User.query.filter_by(id = id).first()
     posts = Post.query.filter_by(user_id = id).order_by((Post.date_created.desc())).all()
