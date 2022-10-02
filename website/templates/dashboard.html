@@ -204,18 +204,18 @@
             <div class="modal-body">
                 <form method="post" name="emailUpdate" action="{{ url_for('auth.update_email') }}">
                     <div class="mb-3">
-                        <label for="email" class="col-form-label">Current email</label>
-                        <input type="email" class="form-control" id="email" name="email" autocomplete="off">
+                        <label for="email1" class="col-form-label">Current email</label>
+                        <input type="email" class="form-control" id="email1" name="email" autocomplete="off">
                     </div>
                     <div class="mb-3">
-                        <label for="password" class="col-form-label">Password</label>
-                        <input type="password" class="form-control" id="password" name="password"></input>
+                        <label for="password1" class="col-form-label">Password</label>
+                        <input type="password" class="form-control" id="password1" name="password"></input>
                     </div>
                     <div class="mb-3 pt-4">
                         <label for="new-email" class="col-form-label">Enter new email</label>
                         <input type="text" class="form-control" id="new-email" name="newEmail"></input>
                     </div>
-                    <button type="submit" class="btn btn-success" onclick=ValidateNewEmail()>update</button>
+                    <button type="button" class="btn btn-success" onclick="ValidateNewEmail()" id="emailUpdat">update</button>
                 </form>
             </div>
             <div class="modal-footer">
@@ -237,24 +237,24 @@
                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="post" name="email-updation" action="{{ url_for('auth.update_username') }}">
+                <form method="post" name="nameUpdate" action="{{ url_for('auth.update_username') }}">
                     <div class="mb-3">
-                        <label for="email" class="col-form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" autocomplete="off">
+                        <label for="email2" class="col-form-label">Email</label>
+                        <input type="email" class="form-control" id="email2" name="unameEmail" autocomplete="off">
                     </div>
                     <div class="mb-3">
-                        <label for="password" class="col-form-label">Password</label>
-                        <input type="password" class="form-control" id="password" name="password"></input>
+                        <label for="password2" class="col-form-label">Password</label>
+                        <input type="password" class="form-control" id="password2" name="password_"></input>
                     </div>
                     <div class="mb-3 pt-4">
-                        <label for="new-username" class="col-form-label">Enter new username</label>
-                        <input type="text" class="form-control" id="new-username" name="new-username"></input>
+                        <label for="newusernam" class="col-form-label">Enter new username</label>
+                        <input type="text" class="form-control" id="newusernam" name="newUser"></input>
                     </div>
-                    <button type="submit" class="btn btn-success ">update</button>
+                    <button type="button" onclick="ValidateNewname()" id="newUsername" class="btn btn-success ">update</button>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+                <button type="button"  class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -274,12 +274,12 @@
             <div class="modal-body">
                 <form method="post" name="email-updation" action="{{ url_for('auth.update_password') }}">
                     <div class="mb-3">
-                        <label for="email" class="col-form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" autocomplete="off">
+                        <label for="email3" class="col-form-label">Email</label>
+                        <input type="email" class="form-control" id="email3" name="email" autocomplete="off">
                     </div>
                     <div class="mb-3">
-                        <label for="password" class="col-form-label">Password</label>
-                        <input type="password" class="form-control" id="password" name="password"></input>
+                        <label for="password3" class="col-form-label">Password</label>
+                        <input type="password" class="form-control" id="password3" name="password"></input>
                     </div>
                     <div class="mb-3 pt-4">
                         <label for="new-password" class="col-form-label">Enter new password</label>

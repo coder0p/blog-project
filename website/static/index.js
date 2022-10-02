@@ -1,12 +1,14 @@
 // Registration form validation
 
-var password = document.registration.password;
-var repeat_password = document.registration.repeat_password;
-var username = document.registration.username;
-var email = document.registration.email;
+
 
 
 function formValidation() {
+
+let password = document.registration.password;
+let repeat_password = document.registration.repeat_password;
+let username = document.registration.username;
+let email = document.registration.email;
 
   if (ValidateEmail(email)) {
     if (allLetter(username)) {
@@ -116,9 +118,10 @@ function like(postId) {
 
 function ValidateNewEmail() {
   var email = document.emailUpdate.newEmail;
+  console.log("DSDSAD");
   
-  if (ValidatesEmail(email)) {
-    document.getElementById("emailUpdat").setAttribute("type","submit")
+    if (ValidatesEmail(email)) {
+      document.getElementById("emailUpdat").setAttribute("type","submit")
   }
   
   return false;
@@ -136,3 +139,26 @@ function ValidateNewEmail() {
   }
   
   }
+//-----------------------------------------------
+function ValidateNewname() {
+  var usernames = document.nameUpdate.newUser;
+  console.log(usernames)
+    
+  if (allLetter(usernames)) {
+    document.getElementById("newUsername").setAttribute("type","submit")
+  }
+    
+  return false;
+    
+  function allLetter(username) {
+    var letters =   /^[A-Za-z]+/ ;
+    if (username.value.match(letters)) {
+      return true;
+  }
+    else {
+      swal("Invalid","Username must have alphabet characters only","error");
+      username.focus();
+      return false;
+    }
+  }
+}
