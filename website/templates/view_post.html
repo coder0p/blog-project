@@ -41,7 +41,7 @@
     <div class="d-flex flex-start">
       {% if comment.user_id %}
       <img class="rounded-circle shadow-1-strong me-3" src="{{url_for('views.view_img',user_id=comment.user_id)}}"
-        alt="avatar" width="40" height="40" />
+        alt="avatar" width="40" height="40" style="object-fit: cover;"/>
       {%else%}
       <img class="rounded-circle shadow-1-strong me-3"
         src="https://is5-ssl.mzstatic.com/image/thumb/Music115/v4/b8/10/b4/b810b4a7-a0a3-72e5-f2cd-c6a7c56b9e4c/artwork.jpg/1200x1200bf-60.jpg"
@@ -75,7 +75,7 @@
       <div class="d-flex flex-start w-100">
 
         <img class="rounded-circle shadow-1-strong me-3" src="{{url_for('views.view_img',user_id=current_user.id)}}"
-          alt="avatar" width="40" height="40" />
+          alt="avatar" width="40" height="40" style="object-fit: cover;"/>
 
         <div class="form-outline w-100">
           <textarea class="form-control" id="textAreaExample" rows="4" style="background: #fff;"

@@ -27,8 +27,10 @@ def login():
                 return redirect(url_for('views.home'))
             else:
                 flash('Password is incorrect.', category='error')
+                return render_template("login.html"),400
         else:
             flash('Email does not exist.', category='error')
+            return render_template("login.html"),404
 
     return render_template("login.html")
 
@@ -65,8 +67,10 @@ def sign_up():
             return render_template("registration.html"),401
         elif len(username) < 2:
             flash('Username is too short!', category='error')
+            return render_template("registration.html"),400
         elif len(password1) <= 6:
             flash('Password is too short!', category='error')
+            return render_template("registration.html"),400
 
 
         else:
@@ -112,8 +116,10 @@ def update_email():
 
         if new_email == "":
             flash("Email shouldn't be empty!", category='error')
+            return render_template("dashboard.html"),204
         elif len(new_email) < 11:
             flash('Email is too short!', category='error')
+            return render_template("dashboard.html"),400
         else:
             new_user=User(id=old_id,email=new_email,username=old_name,password=old_pass)
             if user:
