@@ -176,7 +176,7 @@ def del_category(id):
 
 #category sorting in home page 
 
-@views.route("/<category>/<int:id>/")
+@views.route("<int:id>/<category>")
 def category_post(id,category):
     posts = Post.query.filter_by(category_id  = id).order_by((Post.timestamp.desc())).all()
     category = Category.query.all()
