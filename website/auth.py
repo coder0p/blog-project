@@ -123,7 +123,7 @@ def update_email():
         else:
             new_user=User(id=old_id,email=new_email,username=old_name,password=old_pass)
             if user:
-                if user.email == email:
+                if user.email == new_email:
                     flash("Already in use, please enter different email..!", category="error")
                     return redirect(url_for('views.user_dashboard',id=current_user.id,username=current_user.username))
                 if check_password_hash(user.password, password):
