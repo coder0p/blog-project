@@ -111,7 +111,7 @@
   <!-- Like view -->
 
   {% if current_user.is_authenticated %}
-  <div title="comments" class="p-2 position-relative">
+  <div title="comments" class="p-2">
     <span id="likes-count-{{post.id}}">
       {{ post.likes|length }}</span>
     {% if current_user.id in post.likes|map(attribute="user_id")|list %}
@@ -121,25 +121,32 @@
     <i class="fa-solid fa-hands-clapping fa-lg" id="like-button-{{post.id}}" onclick="like({{post.id}})"></i>
     {% endif %}
   </div>
-
+  
+  <!--no of comments-->
   <div class="position-absolute bottom-0 start-50 translate-middle-x">
-    <!--no of comments-->
     <a href="{{ url_for('views.view_post', id=post.id,slug=post.title) }}">
       <i class="fa-regular fa-comment"></i> {{ post.comments | length }}
     </a>
   </div>
-  {%else%}
+{%else%}
+  <div class="position-absolute bottom-0 end-50 translate-middle-x">
+    <span>
+      {{ post.likes|length }}
+    </span>
+    {% if post.likes | length == 0%}
+    <i class="fa-solid fa-hands-clapping fa-lg"></i>
+    {%else%}
+    <i class="fa-solid fa-hands-clapping fa-lg text-primary"></i>
+    {%endif%}
+  </div>
+
+  <!--no of comments-->
   <div class="position-absolute bottom-0 start-50 translate-middle-x">
-    <!--no of comments-->
     <a href="{{ url_for('views.view_post', id=post.id,slug=post.title) }}">
       <i class="fa-regular fa-comment"></i> {{ post.comments | length }}
     </a>
   </div>
   {% endif %}
-
-
-
-
 
 </div>
 {% endfor %}
